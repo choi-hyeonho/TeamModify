@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ model_label }} 데이터 입력 페이지</title>
+    <meta charset="UTF-8">
+    <style>
+        /* 슬라이더 바 스타일 */
+        .slider-container {
+            width: 50%;
+            margin: 0 auto;
+        }
+        input[type="range"] {
+            width: 100%;
+            display: block;
+        }
+        .value-display {
+            float: right;
+        }
+    </style>
+    <script>
+        function updateValue(elementId) {
+            var valueSpan = document.getElementById(elementId + "Value");
+            var inputElement = document.getElementById(elementId);
+            valueSpan.innerHTML = inputElement.value;
+        }
+    </script>
+</head>
+<body>
+    <h1>{{ model_label }} 데이터 입력 페이지</h1>
+    
+    <div class="slider-container">
+        <form action="/predict" method="post" accept-charset="UTF-8">
+            <label for="length">길이 (mm): <span id="lengthValue" class="value-display">0</span></label>
+            <input type="range" id="length" name="length" min="0" max="300" step="0.1" value="0" oninput="updateValue('length')">
+
+            <label for="width">폭 (mm): <span id="widthValue" class="value-display">0</span></label>
+            <input type="range" id="width" name="width" min="0" max="300" step="0.1" value="0" oninput="updateValue('width')">
+
+            <label for="thickness">두께 (mm): <span id="thicknessValue" class="value-display">0</span></label>
+            <input type="range" id="thickness" name="thickness" min="0" max="50" step="0.1" value="0" oninput="updateValue('thickness')">
+
+            <label for="total_weight">전체 무게 (g): <span id="total_weightValue" class="value-display">0</span></label>
+            <input type="range" id="total_weight" name="total_weight" min="0" max="1000" step="0.1" value="0" oninput="updateValue('total_weight')">
+
+            <label for="meat_weight">살 무게 (g): <span id="meat_weightValue" class="value-display">0</span></label>
+            <input type="range" id="meat_weight" name="meat_weight" min="0" max="1000" step="0.1" value="0" oninput="updateValue('meat_weight')">
+
+            <label for="viscera_weight">내장 무게 (g): <span id="viscera_weightValue" class="value-display">0</span></label>
+            <input type="range" id="viscera_weight" name="viscera_weight" min="0" max="1000" step="0.1" value="0" oninput="updateValue('viscera_weight')">
+
+            <label for="shell_weight">껍질 무게 (g): <span id="shell_weightValue" class="value-display">0</span></label>
+            <input type="range" id="shell_weight" name="shell_weight" min="0" max="1000" step="0.1" value="0" oninput="updateValue('shell_weight')">
+
+            <p>전복 유형 선택:</p>
+            <input type="radio" id="female" name="type" value="female">
+            <label for="female">암컷</label><br>
+            <input type="radio" id="male" name="type" value="male">
+            <label for="male">수컷</label><br>
+            <input type="radio" id="infant" name="type" value="infant">
+            <label for="infant">새끼</label><br>
+
+            <input type="submit" value="예측하기">
+        </form>
+    </div>
+</body>
+</html>

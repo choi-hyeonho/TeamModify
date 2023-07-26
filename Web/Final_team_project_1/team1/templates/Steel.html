@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <h1>Input Form</h1>
+    <form action="/predict" method="post">
+
+        <label for="X_Minimum">X_Minimum:</label>
+        <input type="range" id="X_Minimum" name="X_Minimum" min="0" max="1705" value="852" step="1" required>
+        <span id="X_MinimumValue">852</span><br><br>
+
+        <label for="X_Maximum">X_Maximum:</label>
+        <input type="range" id="X_Maximum" name="X_Maximum" min="4" max="1713" value="858" step="1" required>
+        <span id="X_MaximumValue">858</span><br><br>
+
+        <label for="Y_Minimum">Y_Minimum:</label>
+        <input type="range" id="Y_Minimum" name="Y_Minimum" min="6712" max="12987661" value="6486386" step="1" required>
+        <span id="Y_MinimumValue">6486386</span><br><br>
+
+        <label for="Y_Maximum">Y_Maximum:</label>
+        <input type="range" id="Y_Maximum" name="Y_Maximum" min="6724" max="12987692" value="6486378" step="1" required>
+        <span id="Y_MaximumValue">6486378</span><br><br>
+
+        <label for="Pixels_Areas">Pixels_Areas:</label>
+        <input type="range" id="Pixels_Areas" name="Pixels_Areas" min="2" max="152655" value="76328" step="1" required>
+        <span id="Pixels_AreasValue">76328</span><br><br>
+
+        <label for="X_Perimeter">X_Perimeter:</label>
+        <input type="range" id="X_Perimeter" name="X_Perimeter" min="2" max="10449" value="5225" step="1" required>
+        <span id="X_PerimeterValue">5225</span><br><br>
+
+        <label for="Y_Perimeter">Y_Perimeter:</label>
+        <input type="range" id="Y_Perimeter" name="Y_Perimeter" min="1" max="18152" value="9076" step="1" required>
+        <span id="Y_PerimeterValue">9076</span><br><br>
+
+        <label for="Sum_of_Luminosity">Sum_of_Luminosity:</label>
+        <input type="range" id="Sum_of_Luminosity" name="Sum_of_Luminosity" min="250" max="11591414" value="5795707" step="1" required>
+        <span id="Sum_of_LuminosityValue">5795707</span><br><br>
+
+        <label for="Minimum_of_Luminosity">Minimum_of_Luminosity:</label>
+        <input type="range" id="Minimum_of_Luminosity" name="Minimum_of_Luminosity" min="0" max="203" value="101" step="1" required>
+        <span id="Minimum_of_LuminosityValue">101</span><br><br>
+
+        <label for="Maximum_of_Luminosity">Maximum_of_Luminosity:</label>
+        <input type="range" id="Maximum_of_Luminosity" name="Maximum_of_Luminosity" min="37" max="253" value="145" step="1" required>
+        <span id="Maximum_of_LuminosityValue">145</span><br><br>
+
+        <label for="Length_of_Conveyer">Length_of_Conveyer:</label>
+        <input type="range" id="Length_of_Conveyer" name="Length_of_Conveyer" min="1227" max="1794" value="1510" step="1" required>
+        <span id="Length_of_ConveyerValue">1510</span><br><br>
+
+        <label for="Steel_Plate_Thickness">Steel_Plate_Thickness:</label>
+        <input type="range" id="Steel_Plate_Thickness" name="Steel_Plate_Thickness" min="40" max="300" value="170" step="1" required>
+        <span id="Steel_Plate_ThicknessValue">170</span><br><br>
+
+        <label for="Empty_Index">Empty_Index:</label>
+        <input type="range" id="Empty_Index" name="Empty_Index" min="0.0" max="0.9439" value="0.4719" step="0.0001" required>
+        <span id="Empty_IndexValue">0.4719</span><br><br>
+
+        <label for="Type_of_Steel">Type_of_Steel:</label>
+        <select id="Type_of_Steel" name="Type_of_Steel" required>
+            <option value="">Select an option</option>
+            <option value="A300">A300</option>
+            <option value="A400">A400</option>
+        </select><br><br>
+
+        <input type="submit" value="Predict">
+    </form>
+
+    <div>
+        <h2>Prediction Result:</h2>
+        <p id="predictionResult"></p>
+    </div>
+
+    <script>
+        document.addEventListener("input", function() {
+            document.getElementById("X_MinimumValue").textContent = document.getElementById("X_Minimum").value;
+            document.getElementById("X_MaximumValue").textContent = document.getElementById("X_Maximum").value;
+            document.getElementById("Y_MinimumValue").textContent = document.getElementById("Y_Minimum").value;
+            document.getElementById("Y_MaximumValue").textContent = document.getElementById("Y_Maximum").value;
+            document.getElementById("Pixels_AreasValue").textContent = document.getElementById("Pixels_Areas").value;
+            document.getElementById("X_PerimeterValue").textContent = document.getElementById("X_Perimeter").value;
+            document.getElementById("Y_PerimeterValue").textContent = document.getElementById("Y_Perimeter").value;
+            document.getElementById("Sum_of_LuminosityValue").textContent = document.getElementById("Sum_of_Luminosity").value;
+            document.getElementById("Minimum_of_LuminosityValue").textContent = document.getElementById("Minimum_of_Luminosity").value;
+            document.getElementById("Maximum_of_LuminosityValue").textContent = document.getElementById("Maximum_of_Luminosity").value;
+            document.getElementById("Length_of_ConveyerValue").textContent = document.getElementById("Length_of_Conveyer").value;
+            document.getElementById("Steel_Plate_ThicknessValue").textContent = document.getElementById("Steel_Plate_Thickness").value;
+            document.getElementById("Empty_IndexValue").textContent = document.getElementById("Empty_Index").value;
+        });
+
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(result => {
+                document.getElementById('predictionResult').textContent = "Predicted Steel Type: " + result;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
