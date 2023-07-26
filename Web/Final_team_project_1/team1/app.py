@@ -22,19 +22,20 @@ mactility_discrimination_model = None
 
 # 강판 불량 입력 데이터를 처리하는 함수
 def process_input_data_steel(request):
-    X_Minimum = request.form['X_Minimum']
-    X_Maximum = request.form['X_Maximum']
-    Y_Minimum = request.form['Y_Minimum']
-    Y_Maximum = request.form['Y_Maximum']
-    Pixels_Areas = request.form['Pixels_Areas']
-    X_Perimeter = request.form['X_Perimeter']
-    Y_Perimeter = request.form['Y_Perimeter']
-    Sum_of_Luminosity = request.form['Sum_of_Luminosity']
-    Minimum_of_Luminosity = request.form['Minimum_of_Luminosity']
-    Maximum_of_Luminosity = request.form['Maximum_of_Luminosity']
-    Length_of_Conveyer = request.form['Length_of_Conveyer']
-    Steel_Plate_Thickness = request.form['Steel_Plate_Thickness']
-    Empty_Index = request.form['Empty_Index']
+    # Update: Change the key names to match the input field names
+    X_Minimum = request.form['X_MinimumSlider']
+    X_Maximum = request.form['X_MaximumSlider']
+    Y_Minimum = request.form['Y_MinimumSlider']
+    Y_Maximum = request.form['Y_MaximumSlider']
+    Pixels_Areas = request.form['Pixels_AreasSlider']
+    X_Perimeter = request.form['X_PerimeterSlider']
+    Y_Perimeter = request.form['Y_PerimeterSlider']
+    Sum_of_Luminosity = request.form['Sum_of_LuminositySlider']
+    Minimum_of_Luminosity = request.form['Minimum_of_LuminositySlider']
+    Maximum_of_Luminosity = request.form['Maximum_of_LuminositySlider']
+    Length_of_Conveyer = request.form['Length_of_ConveyerSlider']
+    Steel_Plate_Thickness = request.form['Steel_Plate_ThicknessSlider']
+    Empty_Index = request.form['Empty_IndexSlider']
     Type_of_Steel = request.form['Type_of_Steel']
 
     # 입력값을 데이터에 맞게 변환
@@ -132,7 +133,7 @@ def steel_page():
         return process_steel_input()
     return render_template('Steel.html')
 
-
+'''
 @app.route('/predict', methods=['POST'])
 def predict():
     # 입력 데이터 받기
@@ -183,6 +184,12 @@ def predict():
         result = target_list[num]
 
     return jsonify({'prediction_result': result})
+'''
+# 긴 결과값이 나으는 문제 해결을 위해 predict() 클래스 변경
+@app.route('/predict', methods=['POST'])
+def predict():
+    # '/predict' 엔드포인트에서는 예측을 담당하는 process_steel_input() 함수를 호출하여 결과를 반환
+    return process_steel_input()
 
 @app.route('/pulsation_page', methods=['GET', 'POST'])
 def pulsation_page():
