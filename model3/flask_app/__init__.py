@@ -49,9 +49,7 @@ def predict():
          Empty_Index, Type_of_Steel], dtype=object)
 
     data_array = individual_data.reshape(1, -1) # 개별 데이터를 2차원 배열로 변환
-    data_array = np.array(data_array).astype(int) # str 형태의 데이터를 int로 변환
-
-    print('-------------->', data_array)
+    data_array = np.array(data_array).astype(float) # str 형태의 데이터를 int로 변환
 
     # 예측 수행
     prediction1 = model1.predict(data_array)
