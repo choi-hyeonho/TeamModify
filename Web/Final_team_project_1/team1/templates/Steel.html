@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1>Input Form</h1>
-    <form action="/predict" method="post">
+    <form id="steelForm" action="/predict" method="post">
 
         <label for="X_Minimum">X_Minimum:</label>
         <input type="range" id="X_MinimumSlider" name="X_MinimumSlider" min="0" max="1705" value="852" step="1" required>
@@ -89,6 +89,150 @@
     </div>
 
     <script>
+        const X_MinimumSlider = document.getElementById('X_MinimumSlider');
+        const X_MinimumInput = document.getElementById('X_MinimumInput');
+    
+        X_MinimumSlider.addEventListener('input', () => {
+            X_MinimumInput.value = X_MinimumSlider.value;
+        });
+    
+        X_MinimumInput.addEventListener('input', () => {
+            X_MinimumSlider.value = X_MinimumInput.value;
+        });
+    
+        const X_MaximumSlider = document.getElementById('X_MaximumSlider');
+        const X_MaximumInput = document.getElementById('X_MaximumInput');
+    
+        X_MaximumSlider.addEventListener('input', () => {
+            X_MaximumInput.value = X_MaximumSlider.value;
+        });
+    
+        X_MaximumInput.addEventListener('input', () => {
+            X_MaximumSlider.value = X_MaximumInput.value;
+        });
+    
+        const Y_MinimumSlider = document.getElementById('Y_MinimumSlider');
+        const Y_MinimumInput = document.getElementById('Y_MinimumInput');
+    
+        Y_MinimumSlider.addEventListener('input', () => {
+            Y_MinimumInput.value = Y_MinimumSlider.value;
+        });
+    
+        Y_MinimumInput.addEventListener('input', () => {
+            Y_MinimumSlider.value = Y_MinimumInput.value;
+        });
+    
+        const Y_MaximumSlider = document.getElementById('Y_MaximumSlider');
+        const Y_MaximumInput = document.getElementById('Y_MaximumInput');
+    
+        Y_MaximumSlider.addEventListener('input', () => {
+            Y_MaximumInput.value = Y_MaximumSlider.value;
+        });
+    
+        Y_MaximumInput.addEventListener('input', () => {
+            Y_MaximumSlider.value = Y_MaximumInput.value;
+        });
+    
+            
+        const Pixels_AreasSlider = document.getElementById('Pixels_AreasSlider');
+        const Pixels_AreasInput = document.getElementById('Pixels_AreasInput');
+
+        Pixels_AreasSlider.addEventListener('input', () => {
+            Pixels_AreasInput.value = Pixels_AreasSlider.value;
+        });
+
+        Pixels_AreasInput.addEventListener('input', () => {
+            Pixels_AreasSlider.value = Pixels_AreasInput.value;
+        });
+
+        const X_PerimeterSlider = document.getElementById('X_PerimeterSlider');
+        const X_PerimeterInput = document.getElementById('X_PerimeterInput');
+
+        X_PerimeterSlider.addEventListener('input', () => {
+            X_PerimeterInput.value = X_PerimeterSlider.value;
+        });
+
+        X_PerimeterInput.addEventListener('input', () => {
+            X_PerimeterSlider.value = X_PerimeterInput.value;
+        });
+
+        const Y_PerimeterSlider = document.getElementById('Y_PerimeterSlider');
+        const Y_PerimeterInput = document.getElementById('Y_PerimeterInput');
+
+        Y_PerimeterSlider.addEventListener('input', () => {
+            Y_PerimeterInput.value = Y_PerimeterSlider.value;
+        });
+
+        Y_PerimeterInput.addEventListener('input', () => {
+            Y_PerimeterSlider.value = Y_PerimeterInput.value;
+        });
+
+        const Sum_of_LuminositySlider = document.getElementById('Sum_of_LuminositySlider');
+        const Sum_of_LuminosityInput = document.getElementById('Sum_of_LuminosityInput');
+
+        Sum_of_LuminositySlider.addEventListener('input', () => {
+            Sum_of_LuminosityInput.value = Sum_of_LuminositySlider.value;
+        });
+
+        Sum_of_LuminosityInput.addEventListener('input', () => {
+            Sum_of_LuminositySlider.value = Sum_of_LuminosityInput.value;
+        });
+
+        const Minimum_of_LuminositySlider = document.getElementById('Minimum_of_LuminositySlider');
+        const Minimum_of_LuminosityInput = document.getElementById('Minimum_of_LuminosityInput');
+
+        Minimum_of_LuminositySlider.addEventListener('input', () => {
+            Minimum_of_LuminosityInput.value = Minimum_of_LuminositySlider.value;
+        });
+
+        Minimum_of_LuminosityInput.addEventListener('input', () => {
+            Minimum_of_LuminositySlider.value = Minimum_of_LuminosityInput.value;
+        });
+
+        const Maximum_of_LuminositySlider = document.getElementById('Maximum_of_LuminositySlider');
+        const Maximum_of_LuminosityInput = document.getElementById('Maximum_of_LuminosityInput');
+
+        Maximum_of_LuminositySlider.addEventListener('input', () => {
+            Maximum_of_LuminosityInput.value = Maximum_of_LuminositySlider.value;
+        });
+
+        Maximum_of_LuminosityInput.addEventListener('input', () => {
+            Maximum_of_LuminositySlider.value = Maximum_of_LuminosityInput.value;
+        });
+
+        const Length_of_ConveyerSlider = document.getElementById('Length_of_ConveyerSlider');
+        const Length_of_ConveyerInput = document.getElementById('Length_of_ConveyerInput');
+
+        Length_of_ConveyerSlider.addEventListener('input', () => {
+            Length_of_ConveyerInput.value = Length_of_ConveyerSlider.value;
+        });
+
+        Length_of_ConveyerInput.addEventListener('input', () => {
+            Length_of_ConveyerSlider.value = Length_of_ConveyerInput.value;
+        });
+
+        const Steel_Plate_ThicknessSlider = document.getElementById('Steel_Plate_ThicknessSlider');
+        const Steel_Plate_ThicknessInput = document.getElementById('Steel_Plate_ThicknessInput');
+
+        Steel_Plate_ThicknessSlider.addEventListener('input', () => {
+            Steel_Plate_ThicknessInput.value = Steel_Plate_ThicknessSlider.value;
+        });
+
+        Steel_Plate_ThicknessInput.addEventListener('input', () => {
+            Steel_Plate_ThicknessSlider.value = Steel_Plate_ThicknessInput.value;
+        });
+
+        const Empty_IndexSlider = document.getElementById('Empty_IndexSlider');
+        const Empty_IndexInput = document.getElementById('Empty_IndexInput');
+
+        Empty_IndexSlider.addEventListener('input', () => {
+            Empty_IndexInput.value = Empty_IndexSlider.value;
+        });
+
+        Empty_IndexInput.addEventListener('input', () => {
+            Empty_IndexSlider.value = Empty_IndexInput.value;
+        });
+    
         document.getElementById('steelForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const form = e.target;
@@ -107,5 +251,6 @@
             });
         });
     </script>
+    
 </body>
 </html>
