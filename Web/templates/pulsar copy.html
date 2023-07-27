@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pulsar Star</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Team Modify</h1>
+        <p>Codestates AI 18 Team Project1 2023.07</p>
+    </header>
+
+    <section>
+
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li style="padding-top: 12px; padding-bottom: 12px;">전복 나이 예측 모델</li>
+                <li><a href="{{ url_for('abalone_page') }}">전복 나이 예측해보기</a></li>
+                <li style="padding-top: 12px; padding-bottom: 12px;">맥동성 판별 모델</li>
+                <li><a href="{{ url_for('pulsar_page') }}">맥동성 판별해보기</a></li>
+                <li style="padding-top: 12px; padding-bottom: 12px;">강판 결함 분류 모델</li>
+                <li><a href="{{ url_for('steel_page_dl') }}">딥러닝으로 결함 분류하기</a></li>
+                <li><a href="{{ url_for('steel_page_ml') }}">머신러닝으로 결함 분류하기</a></li>
+                <li style="padding-bottom: 10px;">&nbsp;</li>
+            </ul>
+        </nav>
+
+        <div class='left-box'>
+            <h1>맥동성 데이터를 입력해보세요</h1>
+            <form id="pulsarForm" action="/pulsar_predict" method="post">
+
+                <label for="Mean of the integrated profile">Mean of the integrated profile</label>
+                <input type="range" id="MeanProfileSlider" name="MeanProfileSlider" min="5.812500" max="192.617188" value="27.765625" step="0.000000001" required>
+                <input type="number" id="MeanProfileInput" name="MeanProfileInput" min="5.812500" max="192.617188" value="27.765625" step="0.000000001" required>
+                <br><br>
+
+                <label for="Standard deviation of the integrated profile">Standard deviation of the integrated profile</label>
+                <input type="range" id="StandardProfileSlider" name="StandardProfileSlider" min="24.772042" max="98.778911" value="28.66604164" step="0.000000001" required>
+                <input type="number" id="StandardProfileInput" name="StandardProfileInput" min="24.772042" max="98.778911" value="28.66604164" step="0.000000001" required>
+                <br><br>
+
+                <label for="Excess kurtosis of the integrated profile">Excess kurtosis of the integrated profile</label>
+                <input type="range" id="ExcessProfileSlider" name="ExcessProfileSlider" min="-1.876011" max="8.069522" value="5.770087392" step="0.000000001" required>
+                <input type="number" id="ExcessProfileInput" name="ExcessProfileInput" min="-1.876011" max="8.069522" value="5.770087392" step="0.000000001" required>
+                <br><br>
+
+                <label for="Skewness of the integrated profile">Skewness of the integrated profile</label>
+                <input type="range" id="SkewnessProfileSlider" name="SkewnessProfileSlider" min="-1.791886" max="68.101622" value="37.4190088" step="0.000000001" required>
+                <input type="number" id="SkewnessProfileInput" name="SkewnessProfileInput" min="-1.791886" max="68.101622" value="37.4190088" step="0.000000001" required>
+                <br><br>
+
+                <label for="Mean of the DM-SNR curve">Mean of the DM-SNR curve</label>
+                <input type="range" id="MeanDMSlider" name="MeanDMSlider" min="0.213211" max="223.392141" value="73.11287625" step="0.000000001" required>
+                <input type="number" id="MeanDMInput" name="MeanDMInput" min="0.213211" max="223.392141" value="73.11287625" step="0.000000001" required>
+                <br><br>
+
+                <label for="Standard deviation of the DM-SNR curve">Standard deviation of the DM-SNR curve</label>
+                <input type="range" id="StandardDMSlider" name="StandardDMSlider" min="7.370432" max="110.642211" value="62.07021971" step="0.000000001" required>
+                <input type="number" id="StandardDMInput" name="StandardDMInput" min="7.370432" max="110.642211" value="62.07021971" step="0.000000001" required>
+                <br><br>
+
+                <label for="Excess kurtosis of the DM-SNR curve">Excess kurtosis of the DM-SNR curve</label>
+                <input type="range" id="ExcessDMSlider" name="ExcessDMSlider" min="-3.139270" max="34.539844" value="1.268206006" step="0.000000001" required>
+                <input type="number" id="ExcessDMInput" name="ExcessDMInput" min="-3.139270" max="34.539844" value="1.268206006" step="0.000000001" required>
+                <br><br>
+
+                <label for="Skewness of the DM-SNR curve">Skewness of the DM-SNR curve</label>
+                <input type="range" id="SkewnessDMSlider" name="SkewnessDMSlider" min="-1.976976" max="1191.000837" value="1.082920221" step="0.000000001" required>
+                <input type="number" id="SkewnessDMInput" name="SkewnessDMInput" min="-1.976976" max="1191.000837" value="1.082920221" step="0.000000001" required>
+                <br><br>
+
+                <input type="submit" value="Predict">
+            </form>
+        </div>
+
+            <script>
+                const MeanProfileSlider = document.getElementById('MeanProfileSlider');
+                const MeanProfileInput = document.getElementById('MeanProfileInput');
+            
+                MeanProfileSlider.addEventListener('input', () => {
+                    MeanProfileInput.value = MeanProfileSlider.value;
+                });
+            
+                MeanProfileInput.addEventListener('input', () => {
+                    MeanProfileSlider.value = MeanProfileInput.value;
+                });
+            
+                const StandardProfileSlider = document.getElementById('StandardProfileSlider');
+                const StandardProfileInput = document.getElementById('StandardProfileInput');
+            
+                StandardProfileSlider.addEventListener('input', () => {
+                    StandardProfileInput.value = StandardProfileSlider.value;
+                });
+            
+                StandardProfileInput.addEventListener('input', () => {
+                    StandardProfileSlider.value = StandardProfileInput.value;
+                });
+                
+                const ExcessProfileSlider = document.getElementById('ExcessProfileSlider');
+                const ExcessProfileInput = document.getElementById('ExcessProfileInput');
+            
+                ExcessProfileSlider.addEventListener('input', () => {
+                    ExcessProfileInput.value = ExcessProfileSlider.value;
+                });
+            
+                ExcessProfileInput.addEventListener('input', () => {
+                    ExcessProfileSlider.value = ExcessProfileInput.value;
+                });
+
+                const SkewnessProfileSlider = document.getElementById('SkewnessProfileSlider');
+                const SkewnessProfileInput = document.getElementById('SkewnessProfileInput');
+            
+                SkewnessProfileSlider.addEventListener('input', () => {
+                    SkewnessProfileInput.value = SkewnessProfileSlider.value;
+                });
+            
+                SkewnessProfileInput.addEventListener('input', () => {
+                    SkewnessProfileSlider.value = SkewnessProfileInput.value;
+                });
+                    
+                const MeanDMSlider = document.getElementById('MeanDMSlider');
+                const MeanDMInput = document.getElementById('MeanDMInput');
+
+                MeanDMSlider.addEventListener('input', () => {
+                    MeanDMInput.value = MeanDMSlider.value;
+                });
+
+                MeanDMInput.addEventListener('input', () => {
+                    MeanDMSlider.value = MeanDMInput.value;
+                });
+
+                const StandardDMSlider = document.getElementById('StandardDMSlider');
+                const StandardDMInput = document.getElementById('StandardDMInput');
+
+                StandardDMSlider.addEventListener('input', () => {
+                    StandardDMInput.value = StandardDMSlider.value;
+                });
+
+                StandardDMInput.addEventListener('input', () => {
+                    StandardDMSlider.value = StandardDMInput.value;
+                });
+
+                const ExcessDMSlider = document.getElementById('ExcessDMSlider');
+                const ExcessDMInput = document.getElementById('ExcessDMInput');
+
+                ExcessDMSlider.addEventListener('input', () => {
+                    ExcessDMInput.value = ExcessDMSlider.value;
+                });
+
+                ExcessDMInput.addEventListener('input', () => {
+                    ExcessDMSlider.value = ExcessDMInput.value;
+                });
+
+                const SkewnessDMSlider = document.getElementById('SkewnessDMSlider');
+                const SkewnessDMInput = document.getElementById('SkewnessDMInput');
+
+                SkewnessDMSlider.addEventListener('input', () => {
+                    SkewnessDMInput.value = SkewnessDMSlider.value;
+                });
+
+                SkewnessDMInput.addEventListener('input', () => {
+                    SkewnessDMSlider.value = SkewnessDMInput.value;
+                });
+
+            
+                document.getElementById('pulsarForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const form = e.target;
+                    const formData = new FormData(form);
+            
+                    fetch('/pulsar_predict', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(result => {
+                        document.getElementById('predictionResult').textContent = result;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                });
+            </script>
+
+        <div class='right-box'>
+            <h2>Prediction Result:</h2>
+            <p id="predictionResult"></p>
+        </div>
+    </section>
+    
+</body>
+</html>

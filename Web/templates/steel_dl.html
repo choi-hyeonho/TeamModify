@@ -13,366 +13,368 @@
         <p>Codestates AI 18 Team Project1 2023.07</p>
     </header>
 
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('index') }}">Home</a></li>
-            <li style="padding-top: 12px; padding-bottom: 12px;">전복 나이 예측 모델</li>
-            <li><a href="{{ url_for('abalone_page') }}">전복 나이 예측해보기</a></li>
-            <li style="padding-top: 12px; padding-bottom: 12px;">맥동성 판별 모델</li>
-            <li><a href="{{ url_for('pulsar_page') }}">맥동성 판별해보기</a></li>
-            <li style="padding-top: 12px; padding-bottom: 12px;">강판 결함 분류 모델</li>
-            <li><a href="{{ url_for('steel_page_dl') }}">딥러닝으로 결함 분류하기</a></li>
-            <li><a href="{{ url_for('steel_page_ml') }}">머신러닝으로 결함 분류하기</a></li>
-            <li style="padding-bottom: 10px;">&nbsp;</li>
-        </ul>
-    </nav>
-
     <section>
-        <h1>강판 데이터를 입력해주세요</h1>
-        <form id="steelForm" action="/steel_predict_dl" method="post">
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li style="padding-top: 12px; padding-bottom: 12px;">전복 나이 예측 모델</li>
+                <li><a href="{{ url_for('abalone_page') }}">전복 나이 예측해보기</a></li>
+                <li style="padding-top: 12px; padding-bottom: 12px;">맥동성 판별 모델</li>
+                <li><a href="{{ url_for('pulsar_page') }}">맥동성 판별해보기</a></li>
+                <li style="padding-top: 12px; padding-bottom: 12px;">강판 결함 분류 모델</li>
+                <li><a href="{{ url_for('steel_page_dl') }}">딥러닝으로 결함 분류하기</a></li>
+                <li><a href="{{ url_for('steel_page_ml') }}">머신러닝으로 결함 분류하기</a></li>
+                <li style="padding-bottom: 10px;">&nbsp;</li>
+            </ul>
+        </nav>
 
-            <label for="X_Minimum">X_Minimum:</label>
-            <input type="range" id="X_MinimumSlider" name="X_MinimumSlider" min="0" max="1705" value="852" step="1" required>
-            <input type="number" id="X_MinimumInput" name="X_MinimumInput" min="0" max="1705" value="852" step="1" required>
-            <br><br>
+        <div class='left-box'>
+            <h1>강판 데이터를 입력해보세요</h1>
+            <form id="steelForm" action="/steel_predict_dl" method="post">
 
-            <label for="X_Maximum">X_Maximum:</label>
-            <input type="range" id="X_MaximumSlider" name="X_MaximumSlider" min="4" max="1713" value="858" step="1" required>
-            <input type="number" id="X_MaximumInput" name="X_MaximumInput" min="4" max="1713" value="858" step="1" required>
-            <br><br>
+                <label for="X_Minimum">X_Minimum:</label>
+                <input type="range" id="X_MinimumSlider" name="X_MinimumSlider" min="0" max="1705" value="852" step="1" required>
+                <input type="number" id="X_MinimumInput" name="X_MinimumInput" min="0" max="1705" value="852" step="1" required>
+                <br><br>
 
-            <label for="Y_Minimum">Y_Minimum:</label>
-            <input type="range" id="Y_MinimumSlider" name="Y_MinimumSlider" min="6712" max="12987661" value="6486386" step="1" required>
-            <input type="number" id="Y_MinimumInput" name="Y_MinimumInput" min="6712" max="12987661" value="6486386" step="1" required>
-            <br><br>
+                <label for="X_Maximum">X_Maximum:</label>
+                <input type="range" id="X_MaximumSlider" name="X_MaximumSlider" min="4" max="1713" value="858" step="1" required>
+                <input type="number" id="X_MaximumInput" name="X_MaximumInput" min="4" max="1713" value="858" step="1" required>
+                <br><br>
 
-            <label for="Y_Maximum">Y_Maximum:</label>
-            <input type="range" id="Y_MaximumSlider" name="Y_MaximumSlider" min="6724" max="12987692" value="6486378" step="1" required>
-            <input type="number" id="Y_MaximumInput" name="Y_MaximumInput" min="6724" max="12987692" value="6486378" step="1" required>
-            <br><br>
+                <label for="Y_Minimum">Y_Minimum:</label>
+                <input type="range" id="Y_MinimumSlider" name="Y_MinimumSlider" min="6712" max="12987661" value="6486386" step="1" required>
+                <input type="number" id="Y_MinimumInput" name="Y_MinimumInput" min="6712" max="12987661" value="6486386" step="1" required>
+                <br><br>
 
-            <label for="Pixels_Areas">Pixels_Areas:</label>
-            <input type="range" id="Pixels_AreasSlider" name="Pixels_AreasSlider" min="2" max="152655" value="76328" step="1" required>
-            <input type="number" id="Pixels_AreasInput" name="Pixels_AreasInput" min="2" max="152655" value="76328" step="1" required>
-            <br><br>
+                <label for="Y_Maximum">Y_Maximum:</label>
+                <input type="range" id="Y_MaximumSlider" name="Y_MaximumSlider" min="6724" max="12987692" value="6486378" step="1" required>
+                <input type="number" id="Y_MaximumInput" name="Y_MaximumInput" min="6724" max="12987692" value="6486378" step="1" required>
+                <br><br>
 
-            <label for="X_Perimeter">X_Perimeter:</label>
-            <input type="range" id="X_PerimeterSlider" name="X_PerimeterSlider" min="2" max="10449" value="5225" step="1" required>
-            <input type="number" id="X_PerimeterInput" name="X_PerimeterInput" min="2" max="10449" value="5225" step="1" required>
-            <br><br>
+                <label for="Pixels_Areas">Pixels_Areas:</label>
+                <input type="range" id="Pixels_AreasSlider" name="Pixels_AreasSlider" min="2" max="152655" value="76328" step="1" required>
+                <input type="number" id="Pixels_AreasInput" name="Pixels_AreasInput" min="2" max="152655" value="76328" step="1" required>
+                <br><br>
 
-            <label for="Y_Perimeter">Y_Perimeter:</label>
-            <input type="range" id="Y_PerimeterSlider" name="Y_PerimeterSlider" min="1" max="18152" value="9076" step="1" required>
-            <input type="number" id="Y_PerimeterInput" name="Y_PerimeterInput" min="1" max="18152" value="9076" step="1" required>
-            <br><br>
+                <label for="X_Perimeter">X_Perimeter:</label>
+                <input type="range" id="X_PerimeterSlider" name="X_PerimeterSlider" min="2" max="10449" value="5225" step="1" required>
+                <input type="number" id="X_PerimeterInput" name="X_PerimeterInput" min="2" max="10449" value="5225" step="1" required>
+                <br><br>
 
-            <label for="Sum_of_Luminosity">Sum_of_Luminosity:</label>
-            <input type="range" id="Sum_of_LuminositySlider" name="Sum_of_LuminositySlider" min="250" max="11591414" value="5795707" step="1" required>
-            <input type="number" id="Sum_of_LuminosityInput" name="Sum_of_LuminosityInput" min="250" max="11591414" value="5795707" step="1" required>
-            <br><br>
+                <label for="Y_Perimeter">Y_Perimeter:</label>
+                <input type="range" id="Y_PerimeterSlider" name="Y_PerimeterSlider" min="1" max="18152" value="9076" step="1" required>
+                <input type="number" id="Y_PerimeterInput" name="Y_PerimeterInput" min="1" max="18152" value="9076" step="1" required>
+                <br><br>
 
-            <label for="Minimum_of_Luminosity">Minimum_of_Luminosity:</label>
-            <input type="range" id="Minimum_of_LuminositySlider" name="Minimum_of_LuminositySlider" min="0" max="203" value="101" step="1" required>
-            <input type="number" id="Minimum_of_LuminosityInput" name="Minimum_of_LuminosityInput" min="0" max="203" value="101" step="1" required>
-            <br><br>
+                <label for="Sum_of_Luminosity">Sum_of_Luminosity:</label>
+                <input type="range" id="Sum_of_LuminositySlider" name="Sum_of_LuminositySlider" min="250" max="11591414" value="5795707" step="1" required>
+                <input type="number" id="Sum_of_LuminosityInput" name="Sum_of_LuminosityInput" min="250" max="11591414" value="5795707" step="1" required>
+                <br><br>
 
-            <label for="Maximum_of_Luminosity">Maximum_of_Luminosity:</label>
-            <input type="range" id="Maximum_of_LuminositySlider" name="Maximum_of_LuminositySlider" min="37" max="253" value="145" step="1" required>
-            <input type="number" id="Maximum_of_LuminosityInput" name="Maximum_of_LuminosityInput" min="37" max="253" value="145" step="1" required>
-            <br><br>
+                <label for="Minimum_of_Luminosity">Minimum_of_Luminosity:</label>
+                <input type="range" id="Minimum_of_LuminositySlider" name="Minimum_of_LuminositySlider" min="0" max="203" value="101" step="1" required>
+                <input type="number" id="Minimum_of_LuminosityInput" name="Minimum_of_LuminosityInput" min="0" max="203" value="101" step="1" required>
+                <br><br>
 
-            <label for="Length_of_Conveyer">Length_of_Conveyer:</label>
-            <input type="range" id="Length_of_ConveyerSlider" name="Length_of_ConveyerSlider" min="1227" max="1794" value="1510" step="1" required>
-            <input type="number" id="Length_of_ConveyerInput" name="Length_of_ConveyerInput" min="1227" max="1794" value="1510" step="1" required>
-            <br><br>
+                <label for="Maximum_of_Luminosity">Maximum_of_Luminosity:</label>
+                <input type="range" id="Maximum_of_LuminositySlider" name="Maximum_of_LuminositySlider" min="37" max="253" value="145" step="1" required>
+                <input type="number" id="Maximum_of_LuminosityInput" name="Maximum_of_LuminosityInput" min="37" max="253" value="145" step="1" required>
+                <br><br>
 
-            <label for="Steel_Plate_Thickness">Steel_Plate_Thickness:</label>
-            <input type="range" id="Steel_Plate_ThicknessSlider" name="Steel_Plate_ThicknessSlider" min="40" max="300" value="170" step="1" required>
-            <input type="number" id="Steel_Plate_ThicknessInput" name="Steel_Plate_ThicknessInput" min="40" max="300" value="170" step="1" required>
-            <br><br>
+                <label for="Length_of_Conveyer">Length_of_Conveyer:</label>
+                <input type="range" id="Length_of_ConveyerSlider" name="Length_of_ConveyerSlider" min="1227" max="1794" value="1510" step="1" required>
+                <input type="number" id="Length_of_ConveyerInput" name="Length_of_ConveyerInput" min="1227" max="1794" value="1510" step="1" required>
+                <br><br>
 
-            <label for="Empty_Index">Empty_Index:</label>
-            <input type="range" id="Empty_IndexSlider" name="Empty_IndexSlider" min="0.0" max="0.9439" value="0.4719" step="0.0001" required>
-            <input type="number" id="Empty_IndexInput" name="Empty_IndexInput" min="0.0" max="0.9439" value="0.4719" step="0.0001" required>
-            <br><br>
-            
-            <label for="Edges_X_Index">Edges_X_Index:</label>
-            <input type="range" id="Edges_X_IndexSlider" name="Edges_X_IndexSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <input type="number" id="Edges_X_IndexInput" name="Edges_X_IndexInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <br><br>
+                <label for="Steel_Plate_Thickness">Steel_Plate_Thickness:</label>
+                <input type="range" id="Steel_Plate_ThicknessSlider" name="Steel_Plate_ThicknessSlider" min="40" max="300" value="170" step="1" required>
+                <input type="number" id="Steel_Plate_ThicknessInput" name="Steel_Plate_ThicknessInput" min="40" max="300" value="170" step="1" required>
+                <br><br>
 
-            <label for="Edges_Y_Index">Edges_Y_Index:</label>
-            <input type="range" id="Edges_Y_IndexSlider" name="Edges_Y_IndexSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <input type="number" id="Edges_Y_IndexInput" name="Edges_Y_IndexInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <br><br>
+                <label for="Empty_Index">Empty_Index:</label>
+                <input type="range" id="Empty_IndexSlider" name="Empty_IndexSlider" min="0.0" max="0.9439" value="0.4719" step="0.0001" required>
+                <input type="number" id="Empty_IndexInput" name="Empty_IndexInput" min="0.0" max="0.9439" value="0.4719" step="0.0001" required>
+                <br><br>
+                
+                <label for="Edges_X_Index">Edges_X_Index:</label>
+                <input type="range" id="Edges_X_IndexSlider" name="Edges_X_IndexSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <input type="number" id="Edges_X_IndexInput" name="Edges_X_IndexInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <br><br>
 
-            <label for="Outside_X_Index">Outside_X_Index:</label>
-            <input type="range" id="Outside_X_IndexSlider" name="Outside_X_IndexSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <input type="number" id="Outside_X_IndexInput" name="Outside_X_IndexInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <br><br>
+                <label for="Edges_Y_Index">Edges_Y_Index:</label>
+                <input type="range" id="Edges_Y_IndexSlider" name="Edges_Y_IndexSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <input type="number" id="Edges_Y_IndexInput" name="Edges_Y_IndexInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <br><br>
 
-            <label for="Outside_Global_Index">Outside_Global_Index:</label>
-            <input type="range" id="Outside_Global_IndexSlider" name="Outside_Global_IndexSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <input type="number" id="Outside_Global_IndexInput" name="Outside_Global_IndexInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <br><br>
+                <label for="Outside_X_Index">Outside_X_Index:</label>
+                <input type="range" id="Outside_X_IndexSlider" name="Outside_X_IndexSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <input type="number" id="Outside_X_IndexInput" name="Outside_X_IndexInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <br><br>
 
-            <label for="LogOfAreas">LogOfAreas:</label>
-            <input type="range" id="LogOfAreasSlider" name="LogOfAreasSlider" min="0.0" max="5.0" value="2.5" step="0.0001" required>
-            <input type="number" id="LogOfAreasInput" name="LogOfAreasInput" min="0.0" max="5.0" value="2.5" step="0.0001" required>
-            <br><br>
+                <label for="Outside_Global_Index">Outside_Global_Index:</label>
+                <input type="range" id="Outside_Global_IndexSlider" name="Outside_Global_IndexSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <input type="number" id="Outside_Global_IndexInput" name="Outside_Global_IndexInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <br><br>
 
-            <label for="Log_X_Index">Log_X_Index:</label>
-            <input type="range" id="Log_X_IndexSlider" name="Log_X_IndexSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <input type="number" id="Log_X_IndexInput" name="Log_X_IndexInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <br><br>
+                <label for="LogOfAreas">LogOfAreas:</label>
+                <input type="range" id="LogOfAreasSlider" name="LogOfAreasSlider" min="0.0" max="5.0" value="2.5" step="0.0001" required>
+                <input type="number" id="LogOfAreasInput" name="LogOfAreasInput" min="0.0" max="5.0" value="2.5" step="0.0001" required>
+                <br><br>
 
-            <label for="Log_Y_Index">Log_Y_Index:</label>
-            <input type="range" id="Log_Y_IndexSlider" name="Log_Y_IndexSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <input type="number" id="Log_Y_IndexInput" name="Log_Y_IndexInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <br><br>
+                <label for="Log_X_Index">Log_X_Index:</label>
+                <input type="range" id="Log_X_IndexSlider" name="Log_X_IndexSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <input type="number" id="Log_X_IndexInput" name="Log_X_IndexInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <br><br>
 
-            <label for="Orientation_Index">Orientation_Index:</label>
-            <input type="range" id="Orientation_IndexSlider" name="Orientation_IndexSlider" min="-1.0" max="1.0" value="0.0" step="0.0001" required>
-            <input type="number" id="Orientation_IndexInput" name="Orientation_IndexInput" min="-1.0" max="1.0" value="0.0" step="0.0001" required>
-            <br><br>
+                <label for="Log_Y_Index">Log_Y_Index:</label>
+                <input type="range" id="Log_Y_IndexSlider" name="Log_Y_IndexSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <input type="number" id="Log_Y_IndexInput" name="Log_Y_IndexInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <br><br>
 
-            <label for="Luminosity_Index">Luminosity_Index:</label>
-            <input type="range" id="Luminosity_IndexSlider" name="Luminosity_IndexSlider" min="-1.0" max="1.0" value="0.0" step="0.0001" required>
-            <input type="number" id="Luminosity_IndexInput" name="Luminosity_IndexInput" min="-1.0" max="1.0" value="0.0" step="0.0001" required>
-            <br><br>
+                <label for="Orientation_Index">Orientation_Index:</label>
+                <input type="range" id="Orientation_IndexSlider" name="Orientation_IndexSlider" min="-1.0" max="1.0" value="0.0" step="0.0001" required>
+                <input type="number" id="Orientation_IndexInput" name="Orientation_IndexInput" min="-1.0" max="1.0" value="0.0" step="0.0001" required>
+                <br><br>
 
-            <label for="SigmoidOfAreas">SigmoidOfAreas:</label>
-            <input type="range" id="SigmoidOfAreasSlider" name="SigmoidOfAreasSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <input type="number" id="SigmoidOfAreasInput" name="SigmoidOfAreasInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <br><br>
+                <label for="Luminosity_Index">Luminosity_Index:</label>
+                <input type="range" id="Luminosity_IndexSlider" name="Luminosity_IndexSlider" min="-1.0" max="1.0" value="0.0" step="0.0001" required>
+                <input type="number" id="Luminosity_IndexInput" name="Luminosity_IndexInput" min="-1.0" max="1.0" value="0.0" step="0.0001" required>
+                <br><br>
 
-            <label for="Edges_Index">Edges_Index:</label>
-            <input type="range" id="Edges_IndexSlider" name="Edges_IndexSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <input type="number" id="Edges_IndexInput" name="Edges_IndexInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <br><br>
+                <label for="SigmoidOfAreas">SigmoidOfAreas:</label>
+                <input type="range" id="SigmoidOfAreasSlider" name="SigmoidOfAreasSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <input type="number" id="SigmoidOfAreasInput" name="SigmoidOfAreasInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <br><br>
 
-            <label for="Square_Index">Square_Index:</label>
-            <input type="range" id="Square_IndexSlider" name="Square_IndexSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <input type="number" id="Square_IndexInput" name="Square_IndexInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
-            <br><br>
+                <label for="Edges_Index">Edges_Index:</label>
+                <input type="range" id="Edges_IndexSlider" name="Edges_IndexSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <input type="number" id="Edges_IndexInput" name="Edges_IndexInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <br><br>
 
-            
-            <label for="TypeOfSteel_A300">Type of Steel A300:</label>
-            <input type="number" id="TypeOfSteel_A300" name="Type_of_Steel_A300" min="0" max="1" value="0">
-            <br><br>
-            
-            <label for="TypeOfSteel_A400">Type of Steel A400:</label>
-            <input type="number" id="TypeOfSteel_A400" name="Type_of_Steel_A400" min="0" max="1" value="0">
-            <br><br>
+                <label for="Square_Index">Square_Index:</label>
+                <input type="range" id="Square_IndexSlider" name="Square_IndexSlider" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <input type="number" id="Square_IndexInput" name="Square_IndexInput" min="0.0" max="1.0" value="0.5" step="0.0001" required>
+                <br><br>
 
-            
-            <input type="submit" value="Predict">
-        </form>
+                
+                <label for="TypeOfSteel_A300">Type of Steel A300:</label>
+                <input type="number" id="TypeOfSteel_A300" name="Type_of_Steel_A300" min="0" max="1" value="0">
+                <br><br>
+                
+                <label for="TypeOfSteel_A400">Type of Steel A400:</label>
+                <input type="number" id="TypeOfSteel_A400" name="Type_of_Steel_A400" min="0" max="1" value="0">
+                <br><br>
 
-        <div>
-            <h2>Prediction Result:</h2>
-            <p id="predictionResult"></p>
+                
+                <input type="submit" value="Predict">
+            </form>
         </div>
 
-        <script>
-            const X_MinimumSlider = document.getElementById('X_MinimumSlider');
-            const X_MinimumInput = document.getElementById('X_MinimumInput');
-        
-            X_MinimumSlider.addEventListener('input', () => {
-                X_MinimumInput.value = X_MinimumSlider.value;
-            });
-        
-            X_MinimumInput.addEventListener('input', () => {
-                X_MinimumSlider.value = X_MinimumInput.value;
-            });
-        
-            const X_MaximumSlider = document.getElementById('X_MaximumSlider');
-            const X_MaximumInput = document.getElementById('X_MaximumInput');
-        
-            X_MaximumSlider.addEventListener('input', () => {
-                X_MaximumInput.value = X_MaximumSlider.value;
-            });
-        
-            X_MaximumInput.addEventListener('input', () => {
-                X_MaximumSlider.value = X_MaximumInput.value;
-            });
-        
-            const Y_MinimumSlider = document.getElementById('Y_MinimumSlider');
-            const Y_MinimumInput = document.getElementById('Y_MinimumInput');
-        
-            Y_MinimumSlider.addEventListener('input', () => {
-                Y_MinimumInput.value = Y_MinimumSlider.value;
-            });
-        
-            Y_MinimumInput.addEventListener('input', () => {
-                Y_MinimumSlider.value = Y_MinimumInput.value;
-            });
-        
-            const Y_MaximumSlider = document.getElementById('Y_MaximumSlider');
-            const Y_MaximumInput = document.getElementById('Y_MaximumInput');
-        
-            Y_MaximumSlider.addEventListener('input', () => {
-                Y_MaximumInput.value = Y_MaximumSlider.value;
-            });
-        
-            Y_MaximumInput.addEventListener('input', () => {
-                Y_MaximumSlider.value = Y_MaximumInput.value;
-            });
-        
-                
-            const Pixels_AreasSlider = document.getElementById('Pixels_AreasSlider');
-            const Pixels_AreasInput = document.getElementById('Pixels_AreasInput');
-
-            Pixels_AreasSlider.addEventListener('input', () => {
-                Pixels_AreasInput.value = Pixels_AreasSlider.value;
-            });
-
-            Pixels_AreasInput.addEventListener('input', () => {
-                Pixels_AreasSlider.value = Pixels_AreasInput.value;
-            });
-
-            const X_PerimeterSlider = document.getElementById('X_PerimeterSlider');
-            const X_PerimeterInput = document.getElementById('X_PerimeterInput');
-
-            X_PerimeterSlider.addEventListener('input', () => {
-                X_PerimeterInput.value = X_PerimeterSlider.value;
-            });
-
-            X_PerimeterInput.addEventListener('input', () => {
-                X_PerimeterSlider.value = X_PerimeterInput.value;
-            });
-
-            const Y_PerimeterSlider = document.getElementById('Y_PerimeterSlider');
-            const Y_PerimeterInput = document.getElementById('Y_PerimeterInput');
-
-            Y_PerimeterSlider.addEventListener('input', () => {
-                Y_PerimeterInput.value = Y_PerimeterSlider.value;
-            });
-
-            Y_PerimeterInput.addEventListener('input', () => {
-                Y_PerimeterSlider.value = Y_PerimeterInput.value;
-            });
-
-            const Sum_of_LuminositySlider = document.getElementById('Sum_of_LuminositySlider');
-            const Sum_of_LuminosityInput = document.getElementById('Sum_of_LuminosityInput');
-
-            Sum_of_LuminositySlider.addEventListener('input', () => {
-                Sum_of_LuminosityInput.value = Sum_of_LuminositySlider.value;
-            });
-
-            Sum_of_LuminosityInput.addEventListener('input', () => {
-                Sum_of_LuminositySlider.value = Sum_of_LuminosityInput.value;
-            });
-
-            const Minimum_of_LuminositySlider = document.getElementById('Minimum_of_LuminositySlider');
-            const Minimum_of_LuminosityInput = document.getElementById('Minimum_of_LuminosityInput');
-
-            Minimum_of_LuminositySlider.addEventListener('input', () => {
-                Minimum_of_LuminosityInput.value = Minimum_of_LuminositySlider.value;
-            });
-
-            Minimum_of_LuminosityInput.addEventListener('input', () => {
-                Minimum_of_LuminositySlider.value = Minimum_of_LuminosityInput.value;
-            });
-
-            const Maximum_of_LuminositySlider = document.getElementById('Maximum_of_LuminositySlider');
-            const Maximum_of_LuminosityInput = document.getElementById('Maximum_of_LuminosityInput');
-
-            Maximum_of_LuminositySlider.addEventListener('input', () => {
-                Maximum_of_LuminosityInput.value = Maximum_of_LuminositySlider.value;
-            });
-
-            Maximum_of_LuminosityInput.addEventListener('input', () => {
-                Maximum_of_LuminositySlider.value = Maximum_of_LuminosityInput.value;
-            });
-
-            const Length_of_ConveyerSlider = document.getElementById('Length_of_ConveyerSlider');
-            const Length_of_ConveyerInput = document.getElementById('Length_of_ConveyerInput');
-
-            Length_of_ConveyerSlider.addEventListener('input', () => {
-                Length_of_ConveyerInput.value = Length_of_ConveyerSlider.value;
-            });
-
-            Length_of_ConveyerInput.addEventListener('input', () => {
-                Length_of_ConveyerSlider.value = Length_of_ConveyerInput.value;
-            });
-
-            const Steel_Plate_ThicknessSlider = document.getElementById('Steel_Plate_ThicknessSlider');
-            const Steel_Plate_ThicknessInput = document.getElementById('Steel_Plate_ThicknessInput');
-
-            Steel_Plate_ThicknessSlider.addEventListener('input', () => {
-                Steel_Plate_ThicknessInput.value = Steel_Plate_ThicknessSlider.value;
-            });
-
-            Steel_Plate_ThicknessInput.addEventListener('input', () => {
-                Steel_Plate_ThicknessSlider.value = Steel_Plate_ThicknessInput.value;
-            });
-
-            const Empty_IndexSlider = document.getElementById('Empty_IndexSlider');
-            const Empty_IndexInput = document.getElementById('Empty_IndexInput');
-
-            Empty_IndexSlider.addEventListener('input', () => {
-                Empty_IndexInput.value = Empty_IndexSlider.value;
-            });
-
-            Empty_IndexInput.addEventListener('input', () => {
-                Empty_IndexSlider.value = Empty_IndexInput.value;
-            });
-        
-            document.getElementById('steelForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const form = e.target;
-                const formData = new FormData(form);
-        
-                fetch('/steel_predict_dl', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.text())
-                .then(result => {
-                    document.getElementById('predictionResult').textContent = "Predicted Steel Type: " + result;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
+            <script>
+                const X_MinimumSlider = document.getElementById('X_MinimumSlider');
+                const X_MinimumInput = document.getElementById('X_MinimumInput');
+            
+                X_MinimumSlider.addEventListener('input', () => {
+                    X_MinimumInput.value = X_MinimumSlider.value;
                 });
-            });
-            // 폼 전송 버튼 클릭 이벤트에 submitForm 함수 연결
-            //document.getElementById('predictButton').addEventListener('click', function(e) {
-            //    e.preventDefault();
-            //    submitForm();
-            //});
-        </script>
-        <script>
-            // 각 슬라이더와 숫자 입력 요소를 연결하는 함수
-            function setupSliderInputBindings(slider, input) {
+            
+                X_MinimumInput.addEventListener('input', () => {
+                    X_MinimumSlider.value = X_MinimumInput.value;
+                });
+            
+                const X_MaximumSlider = document.getElementById('X_MaximumSlider');
+                const X_MaximumInput = document.getElementById('X_MaximumInput');
+            
+                X_MaximumSlider.addEventListener('input', () => {
+                    X_MaximumInput.value = X_MaximumSlider.value;
+                });
+            
+                X_MaximumInput.addEventListener('input', () => {
+                    X_MaximumSlider.value = X_MaximumInput.value;
+                });
+            
+                const Y_MinimumSlider = document.getElementById('Y_MinimumSlider');
+                const Y_MinimumInput = document.getElementById('Y_MinimumInput');
+            
+                Y_MinimumSlider.addEventListener('input', () => {
+                    Y_MinimumInput.value = Y_MinimumSlider.value;
+                });
+            
+                Y_MinimumInput.addEventListener('input', () => {
+                    Y_MinimumSlider.value = Y_MinimumInput.value;
+                });
+            
+                const Y_MaximumSlider = document.getElementById('Y_MaximumSlider');
+                const Y_MaximumInput = document.getElementById('Y_MaximumInput');
+            
+                Y_MaximumSlider.addEventListener('input', () => {
+                    Y_MaximumInput.value = Y_MaximumSlider.value;
+                });
+            
+                Y_MaximumInput.addEventListener('input', () => {
+                    Y_MaximumSlider.value = Y_MaximumInput.value;
+                });
+            
+                    
+                const Pixels_AreasSlider = document.getElementById('Pixels_AreasSlider');
+                const Pixels_AreasInput = document.getElementById('Pixels_AreasInput');
+
+                Pixels_AreasSlider.addEventListener('input', () => {
+                    Pixels_AreasInput.value = Pixels_AreasSlider.value;
+                });
+
+                Pixels_AreasInput.addEventListener('input', () => {
+                    Pixels_AreasSlider.value = Pixels_AreasInput.value;
+                });
+
+                const X_PerimeterSlider = document.getElementById('X_PerimeterSlider');
+                const X_PerimeterInput = document.getElementById('X_PerimeterInput');
+
+                X_PerimeterSlider.addEventListener('input', () => {
+                    X_PerimeterInput.value = X_PerimeterSlider.value;
+                });
+
+                X_PerimeterInput.addEventListener('input', () => {
+                    X_PerimeterSlider.value = X_PerimeterInput.value;
+                });
+
+                const Y_PerimeterSlider = document.getElementById('Y_PerimeterSlider');
+                const Y_PerimeterInput = document.getElementById('Y_PerimeterInput');
+
+                Y_PerimeterSlider.addEventListener('input', () => {
+                    Y_PerimeterInput.value = Y_PerimeterSlider.value;
+                });
+
+                Y_PerimeterInput.addEventListener('input', () => {
+                    Y_PerimeterSlider.value = Y_PerimeterInput.value;
+                });
+
+                const Sum_of_LuminositySlider = document.getElementById('Sum_of_LuminositySlider');
+                const Sum_of_LuminosityInput = document.getElementById('Sum_of_LuminosityInput');
+
+                Sum_of_LuminositySlider.addEventListener('input', () => {
+                    Sum_of_LuminosityInput.value = Sum_of_LuminositySlider.value;
+                });
+
+                Sum_of_LuminosityInput.addEventListener('input', () => {
+                    Sum_of_LuminositySlider.value = Sum_of_LuminosityInput.value;
+                });
+
+                const Minimum_of_LuminositySlider = document.getElementById('Minimum_of_LuminositySlider');
+                const Minimum_of_LuminosityInput = document.getElementById('Minimum_of_LuminosityInput');
+
+                Minimum_of_LuminositySlider.addEventListener('input', () => {
+                    Minimum_of_LuminosityInput.value = Minimum_of_LuminositySlider.value;
+                });
+
+                Minimum_of_LuminosityInput.addEventListener('input', () => {
+                    Minimum_of_LuminositySlider.value = Minimum_of_LuminosityInput.value;
+                });
+
+                const Maximum_of_LuminositySlider = document.getElementById('Maximum_of_LuminositySlider');
+                const Maximum_of_LuminosityInput = document.getElementById('Maximum_of_LuminosityInput');
+
+                Maximum_of_LuminositySlider.addEventListener('input', () => {
+                    Maximum_of_LuminosityInput.value = Maximum_of_LuminositySlider.value;
+                });
+
+                Maximum_of_LuminosityInput.addEventListener('input', () => {
+                    Maximum_of_LuminositySlider.value = Maximum_of_LuminosityInput.value;
+                });
+
+                const Length_of_ConveyerSlider = document.getElementById('Length_of_ConveyerSlider');
+                const Length_of_ConveyerInput = document.getElementById('Length_of_ConveyerInput');
+
+                Length_of_ConveyerSlider.addEventListener('input', () => {
+                    Length_of_ConveyerInput.value = Length_of_ConveyerSlider.value;
+                });
+
+                Length_of_ConveyerInput.addEventListener('input', () => {
+                    Length_of_ConveyerSlider.value = Length_of_ConveyerInput.value;
+                });
+
+                const Steel_Plate_ThicknessSlider = document.getElementById('Steel_Plate_ThicknessSlider');
+                const Steel_Plate_ThicknessInput = document.getElementById('Steel_Plate_ThicknessInput');
+
+                Steel_Plate_ThicknessSlider.addEventListener('input', () => {
+                    Steel_Plate_ThicknessInput.value = Steel_Plate_ThicknessSlider.value;
+                });
+
+                Steel_Plate_ThicknessInput.addEventListener('input', () => {
+                    Steel_Plate_ThicknessSlider.value = Steel_Plate_ThicknessInput.value;
+                });
+
+                const Empty_IndexSlider = document.getElementById('Empty_IndexSlider');
+                const Empty_IndexInput = document.getElementById('Empty_IndexInput');
+
+                Empty_IndexSlider.addEventListener('input', () => {
+                    Empty_IndexInput.value = Empty_IndexSlider.value;
+                });
+
+                Empty_IndexInput.addEventListener('input', () => {
+                    Empty_IndexSlider.value = Empty_IndexInput.value;
+                });
+            
+                document.getElementById('steelForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const form = e.target;
+                    const formData = new FormData(form);
+            
+                    fetch('/steel_predict_dl', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(result => {
+                        document.getElementById('predictionResult').textContent = "Predicted Steel Type: " + result;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                });
+                // 폼 전송 버튼 클릭 이벤트에 submitForm 함수 연결
+                //document.getElementById('predictButton').addEventListener('click', function(e) {
+                //    e.preventDefault();
+                //    submitForm();
+                //});
+            </script>
+            <script>
+                // 각 슬라이더와 숫자 입력 요소를 연결하는 함수
+                function setupSliderInputBindings(slider, input) {
+                    slider.addEventListener('input', () => {
+                        input.value = slider.value;
+                    });
+            
+                    input.addEventListener('input', () => {
+                        slider.value = input.value;
+                    });
+                }
+                
+                // 각 슬라이더와 숫자 입력 요소를 연결하는 함수
+                function setupSliderInputBindings(slider, input) {
                 slider.addEventListener('input', () => {
                     input.value = slider.value;
                 });
-        
+
                 input.addEventListener('input', () => {
                     slider.value = input.value;
                 });
-            }
+                }
+                // 각 슬라이더와 숫자 입력 요소를 가져와서 연결 설정
+                const sliders = document.querySelectorAll('input[type="range"]');
+                const inputs = document.querySelectorAll('input[type="number"]');
             
-            // 각 슬라이더와 숫자 입력 요소를 연결하는 함수
-            function setupSliderInputBindings(slider, input) {
-            slider.addEventListener('input', () => {
-                input.value = slider.value;
-            });
+                sliders.forEach((slider, index) => {
+                    const input = inputs[index];
+                    setupSliderInputBindings(slider, input);
+                });
+            </script>
 
-            input.addEventListener('input', () => {
-                slider.value = input.value;
-            });
-            }
-            // 각 슬라이더와 숫자 입력 요소를 가져와서 연결 설정
-            const sliders = document.querySelectorAll('input[type="range"]');
-            const inputs = document.querySelectorAll('input[type="number"]');
-        
-            sliders.forEach((slider, index) => {
-                const input = inputs[index];
-                setupSliderInputBindings(slider, input);
-            });
-        </script>
+        <div class='right-box'>
+            <h2>Prediction Result:</h2>
+            <p id="predictionResult"></p>
+        </div>
     </section>
         
 </body>

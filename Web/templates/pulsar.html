@@ -13,165 +13,213 @@
         <p>Codestates AI 18 Team Project1 2023.07</p>
     </header>
 
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('index') }}">Home</a></li>
-            <li style="padding-top: 12px; padding-bottom: 12px;">전복 나이 예측 모델</li>
-            <li><a href="{{ url_for('abalone_page') }}">전복 나이 예측해보기</a></li>
-            <li style="padding-top: 12px; padding-bottom: 12px;">맥동성 판별 모델</li>
-            <li><a href="{{ url_for('pulsar_page') }}">맥동성 판별해보기</a></li>
-            <li style="padding-top: 12px; padding-bottom: 12px;">강판 결함 분류 모델</li>
-            <li><a href="{{ url_for('steel_page_dl') }}">딥러닝으로 결함 분류하기</a></li>
-            <li><a href="{{ url_for('steel_page_ml') }}">머신러닝으로 결함 분류하기</a></li>
-            <li style="padding-bottom: 10px;">&nbsp;</li>
-        </ul>
-    </nav>
-
     <section>
-        <h1>맥동성 데이터를 입력해보세요</h1>
-        <form id="pulsarForm" action="/pulsar_predict" method="post">
 
-            <label for="Mean of the integrated profile">Mean of the integrated profile</label>
-            <input type="range" id="MeanProfileSlider" name="MeanProfileSlider" min="5.812500" max="192.617188" value="27.765625" step="0.000000001" required>
-            <input type="number" id="MeanProfileInput" name="MeanProfileInput" min="5.812500" max="192.617188" value="27.765625" step="0.000000001" required>
-            <br><br>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li style="padding-top: 12px; padding-bottom: 12px;">전복 나이 예측 모델</li>
+                <li><a href="{{ url_for('abalone_page') }}">전복 나이 예측해보기</a></li>
+                <li style="padding-top: 12px; padding-bottom: 12px;">맥동성 판별 모델</li>
+                <li><a href="{{ url_for('pulsar_page') }}">맥동성 판별해보기</a></li>
+                <li style="padding-top: 12px; padding-bottom: 12px;">강판 결함 분류 모델</li>
+                <li><a href="{{ url_for('steel_page_dl') }}">딥러닝으로 결함 분류하기</a></li>
+                <li><a href="{{ url_for('steel_page_ml') }}">머신러닝으로 결함 분류하기</a></li>
+                <li style="padding-bottom: 10px;">&nbsp;</li>
+            </ul>
+        </nav>
 
-            <label for="Standard deviation of the integrated profile">Standard deviation of the integrated profile</label>
-            <input type="range" id="StandardProfileSlider" name="StandardProfileSlider" min="24.772042" max="98.778911" value="28.66604164" step="0.000000001" required>
-            <input type="number" id="StandardProfileInput" name="StandardProfileInput" min="24.772042" max="98.778911" value="28.66604164" step="0.000000001" required>
-            <br><br>
+        <div class='left-box'>
+            <h1>맥동성 데이터를 입력해보세요</h1>
+            <form id="pulsarForm" action="/pulsar_predict" method="post">
 
-            <label for="Excess kurtosis of the integrated profile">Excess kurtosis of the integrated profile</label>
-            <input type="range" id="ExcessProfileSlider" name="ExcessProfileSlider" min="-1.876011" max="8.069522" value="5.770087392" step="0.000000001" required>
-            <input type="number" id="ExcessProfileInput" name="ExcessProfileInput" min="-1.876011" max="8.069522" value="5.770087392" step="0.000000001" required>
-            <br><br>
+                <label for="Mean of the integrated profile">Mean of the integrated profile</label>
+                <input type="range" id="MeanProfileSlider" name="MeanProfileSlider" min="5.812500" max="192.617188" value="27.765625" step="0.000000001" required>
+                <input type="number" id="MeanProfileInput" name="MeanProfileInput" min="5.812500" max="192.617188" value="27.765625" step="0.000000001" required>
+                <br><br>
 
-            <label for="Skewness of the integrated profile">Skewness of the integrated profile</label>
-            <input type="range" id="SkewnessProfileSlider" name="SkewnessProfileSlider" min="-1.791886" max="68.101622" value="37.4190088" step="0.000000001" required>
-            <input type="number" id="SkewnessProfileInput" name="SkewnessProfileInput" min="-1.791886" max="68.101622" value="37.4190088" step="0.000000001" required>
-            <br><br>
+                <label for="Standard deviation of the integrated profile">Standard deviation of the integrated profile</label>
+                <input type="range" id="StandardProfileSlider" name="StandardProfileSlider" min="24.772042" max="98.778911" value="28.66604164" step="0.000000001" required>
+                <input type="number" id="StandardProfileInput" name="StandardProfileInput" min="24.772042" max="98.778911" value="28.66604164" step="0.000000001" required>
+                <br><br>
 
-            <label for="Mean of the DM-SNR curve">Mean of the DM-SNR curve</label>
-            <input type="range" id="MeanDMSlider" name="MeanDMSlider" min="0.213211" max="223.392141" value="73.11287625" step="0.000000001" required>
-            <input type="number" id="MeanDMInput" name="MeanDMInput" min="0.213211" max="223.392141" value="73.11287625" step="0.000000001" required>
-            <br><br>
+                <label for="Excess kurtosis of the integrated profile">Excess kurtosis of the integrated profile</label>
+                <input type="range" id="ExcessProfileSlider" name="ExcessProfileSlider" min="-1.876011" max="8.069522" value="5.770087392" step="0.000000001" required>
+                <input type="number" id="ExcessProfileInput" name="ExcessProfileInput" min="-1.876011" max="8.069522" value="5.770087392" step="0.000000001" required>
+                <br><br>
 
-            <label for="Standard deviation of the DM-SNR curve">Standard deviation of the DM-SNR curve</label>
-            <input type="range" id="StandardDMSlider" name="StandardDMSlider" min="7.370432" max="110.642211" value="62.07021971" step="0.000000001" required>
-            <input type="number" id="StandardDMInput" name="StandardDMInput" min="7.370432" max="110.642211" value="62.07021971" step="0.000000001" required>
-            <br><br>
+                <label for="Skewness of the integrated profile">Skewness of the integrated profile</label>
+                <input type="range" id="SkewnessProfileSlider" name="SkewnessProfileSlider" min="-1.791886" max="68.101622" value="37.4190088" step="0.000000001" required>
+                <input type="number" id="SkewnessProfileInput" name="SkewnessProfileInput" min="-1.791886" max="68.101622" value="37.4190088" step="0.000000001" required>
+                <br><br>
 
-            <label for="Excess kurtosis of the DM-SNR curve">Excess kurtosis of the DM-SNR curve</label>
-            <input type="range" id="ExcessDMSlider" name="ExcessDMSlider" min="-3.139270" max="34.539844" value="1.268206006" step="0.000000001" required>
-            <input type="number" id="ExcessDMInput" name="ExcessDMInput" min="-3.139270" max="34.539844" value="1.268206006" step="0.000000001" required>
-            <br><br>
+                <label for="Mean of the DM-SNR curve">Mean of the DM-SNR curve</label>
+                <input type="range" id="MeanDMSlider" name="MeanDMSlider" min="0.213211" max="223.392141" value="73.11287625" step="0.000000001" required>
+                <input type="number" id="MeanDMInput" name="MeanDMInput" min="0.213211" max="223.392141" value="73.11287625" step="0.000000001" required>
+                <br><br>
 
-            <label for="Skewness of the DM-SNR curve">Skewness of the DM-SNR curve</label>
-            <input type="range" id="SkewnessDMSlider" name="SkewnessDMSlider" min="-1.976976" max="1191.000837" value="1.082920221" step="0.000000001" required>
-            <input type="number" id="SkewnessDMInput" name="SkewnessDMInput" min="-1.976976" max="1191.000837" value="1.082920221" step="0.000000001" required>
-            <br><br>
+                <label for="Standard deviation of the DM-SNR curve">Standard deviation of the DM-SNR curve</label>
+                <input type="range" id="StandardDMSlider" name="StandardDMSlider" min="7.370432" max="110.642211" value="62.07021971" step="0.000000001" required>
+                <input type="number" id="StandardDMInput" name="StandardDMInput" min="7.370432" max="110.642211" value="62.07021971" step="0.000000001" required>
+                <br><br>
 
-            <input type="submit" value="Predict">
-        </form>
+                <label for="Excess kurtosis of the DM-SNR curve">Excess kurtosis of the DM-SNR curve</label>
+                <input type="range" id="ExcessDMSlider" name="ExcessDMSlider" min="-3.139270" max="34.539844" value="1.268206006" step="0.000000001" required>
+                <input type="number" id="ExcessDMInput" name="ExcessDMInput" min="-3.139270" max="34.539844" value="1.268206006" step="0.000000001" required>
+                <br><br>
 
-        <div>
-            <h2>Prediction Result:</h2>
-            <p id="predictionResult"></p>
+                <label for="Skewness of the DM-SNR curve">Skewness of the DM-SNR curve</label>
+                <input type="range" id="SkewnessDMSlider" name="SkewnessDMSlider" min="-1.976976" max="1191.000837" value="1.082920221" step="0.000000001" required>
+                <input type="number" id="SkewnessDMInput" name="SkewnessDMInput" min="-1.976976" max="1191.000837" value="1.082920221" step="0.000000001" required>
+                <br><br>
+
+                <input type="submit" value="Predict">
+            </form>
         </div>
 
-        <script>
-            const MeanProfileSlider = document.getElementById('MeanProfileSlider');
-            const MeanProfileInput = document.getElementById('MeanProfileInput');
-        
-            MeanProfileSlider.addEventListener('input', () => {
-                MeanProfileInput.value = MeanProfileSlider.value;
-            });
-        
-            MeanProfileInput.addEventListener('input', () => {
-                MeanProfileSlider.value = MeanProfileInput.value;
-            });
-        
-            const StandardProfileSlider = document.getElementById('StandardProfileSlider');
-            const StandardProfileInput = document.getElementById('StandardProfileInput');
-        
-            StandardProfileSlider.addEventListener('input', () => {
-                StandardProfileInput.value = StandardProfileSlider.value;
-            });
-        
-            StandardProfileInput.addEventListener('input', () => {
-                StandardProfileSlider.value = StandardProfileInput.value;
-            });
+            <script>
+                const MeanProfileSlider = document.getElementById('MeanProfileSlider');
+                const MeanProfileInput = document.getElementById('MeanProfileInput');
             
-            const ExcessProfileSlider = document.getElementById('ExcessProfileSlider');
-            const ExcessProfileInput = document.getElementById('ExcessProfileInput');
-        
-            ExcessProfileSlider.addEventListener('input', () => {
-                ExcessProfileInput.value = ExcessProfileSlider.value;
-            });
-        
-            ExcessProfileInput.addEventListener('input', () => {
-                ExcessProfileSlider.value = ExcessProfileInput.value;
-            });
-
-            const SkewnessProfileSlider = document.getElementById('SkewnessProfileSlider');
-            const SkewnessProfileInput = document.getElementById('SkewnessProfileInput');
-        
-            SkewnessProfileSlider.addEventListener('input', () => {
-                SkewnessProfileInput.value = SkewnessProfileSlider.value;
-            });
-        
-            SkewnessProfileInput.addEventListener('input', () => {
-                SkewnessProfileSlider.value = SkewnessProfileInput.value;
-            });
+                MeanProfileSlider.addEventListener('input', () => {
+                    MeanProfileInput.value = MeanProfileSlider.value;
+                });
+            
+                MeanProfileInput.addEventListener('input', () => {
+                    MeanProfileSlider.value = MeanProfileInput.value;
+                });
+            
+                const StandardProfileSlider = document.getElementById('StandardProfileSlider');
+                const StandardProfileInput = document.getElementById('StandardProfileInput');
+            
+                StandardProfileSlider.addEventListener('input', () => {
+                    StandardProfileInput.value = StandardProfileSlider.value;
+                });
+            
+                StandardProfileInput.addEventListener('input', () => {
+                    StandardProfileSlider.value = StandardProfileInput.value;
+                });
                 
-            const MeanDMSlider = document.getElementById('MeanDMSlider');
-            const MeanDMInput = document.getElementById('MeanDMInput');
+                const ExcessProfileSlider = document.getElementById('ExcessProfileSlider');
+                const ExcessProfileInput = document.getElementById('ExcessProfileInput');
+            
+                ExcessProfileSlider.addEventListener('input', () => {
+                    ExcessProfileInput.value = ExcessProfileSlider.value;
+                });
+            
+                ExcessProfileInput.addEventListener('input', () => {
+                    ExcessProfileSlider.value = ExcessProfileInput.value;
+                });
 
-            MeanDMSlider.addEventListener('input', () => {
-                MeanDMInput.value = MeanDMSlider.value;
-            });
+                const SkewnessProfileSlider = document.getElementById('SkewnessProfileSlider');
+                const SkewnessProfileInput = document.getElementById('SkewnessProfileInput');
+            
+                SkewnessProfileSlider.addEventListener('input', () => {
+                    SkewnessProfileInput.value = SkewnessProfileSlider.value;
+                });
+            
+                SkewnessProfileInput.addEventListener('input', () => {
+                    SkewnessProfileSlider.value = SkewnessProfileInput.value;
+                });
+                    
+                const MeanDMSlider = document.getElementById('MeanDMSlider');
+                const MeanDMInput = document.getElementById('MeanDMInput');
 
-            MeanDMInput.addEventListener('input', () => {
-                MeanDMSlider.value = MeanDMInput.value;
-            });
+                MeanDMSlider.addEventListener('input', () => {
+                    MeanDMInput.value = MeanDMSlider.value;
+                });
 
-            const StandardDMSlider = document.getElementById('StandardDMSlider');
-            const StandardDMInput = document.getElementById('StandardDMInput');
+                MeanDMInput.addEventListener('input', () => {
+                    MeanDMSlider.value = MeanDMInput.value;
+                });
 
-            StandardDMSlider.addEventListener('input', () => {
-                StandardDMInput.value = StandardDMSlider.value;
-            });
+                const StandardDMSlider = document.getElementById('StandardDMSlider');
+                const StandardDMInput = document.getElementById('StandardDMInput');
 
-            StandardDMInput.addEventListener('input', () => {
-                StandardDMSlider.value = StandardDMInput.value;
-            });
+                StandardDMSlider.addEventListener('input', () => {
+                    StandardDMInput.value = StandardDMSlider.value;
+                });
 
-            const ExcessDMSlider = document.getElementById('ExcessDMSlider');
-            const ExcessDMInput = document.getElementById('ExcessDMInput');
+                StandardDMInput.addEventListener('input', () => {
+                    StandardDMSlider.value = StandardDMInput.value;
+                });
 
-            ExcessDMSlider.addEventListener('input', () => {
-                ExcessDMInput.value = ExcessDMSlider.value;
-            });
+                const ExcessDMSlider = document.getElementById('ExcessDMSlider');
+                const ExcessDMInput = document.getElementById('ExcessDMInput');
 
-            ExcessDMInput.addEventListener('input', () => {
-                ExcessDMSlider.value = ExcessDMInput.value;
-            });
+                ExcessDMSlider.addEventListener('input', () => {
+                    ExcessDMInput.value = ExcessDMSlider.value;
+                });
 
-            const SkewnessDMSlider = document.getElementById('SkewnessDMSlider');
-            const SkewnessDMInput = document.getElementById('SkewnessDMInput');
+                ExcessDMInput.addEventListener('input', () => {
+                    ExcessDMSlider.value = ExcessDMInput.value;
+                });
 
-            SkewnessDMSlider.addEventListener('input', () => {
-                SkewnessDMInput.value = SkewnessDMSlider.value;
-            });
+                const SkewnessDMSlider = document.getElementById('SkewnessDMSlider');
+                const SkewnessDMInput = document.getElementById('SkewnessDMInput');
 
-            SkewnessDMInput.addEventListener('input', () => {
-                SkewnessDMSlider.value = SkewnessDMInput.value;
-            });
+                SkewnessDMSlider.addEventListener('input', () => {
+                    SkewnessDMInput.value = SkewnessDMSlider.value;
+                });
+
+                SkewnessDMInput.addEventListener('input', () => {
+                    SkewnessDMSlider.value = SkewnessDMInput.value;
+                });
+
+            
+                document.getElementById('pulsarForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const form = e.target;
+                    const formData = new FormData(form);
+            
+                    fetch('/pulsar_predict', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(result => {
+                        document.getElementById('predictionResult').textContent = result;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                });
+            </script>
+
+        <div class='right-box'>
+
+            <h2>Prediction Result ↓</h2>
+            <p id="predictionResult"></p>
+            <br><br>
 
         
-            document.getElementById('pulsarForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const form = e.target;
+            {% if data %}
+                <h2>데이터를 클릭해보세요</h2>
+                <table class="table table-striped">
+                    {{ data|safe }}
+                </table>
+
+                <form id="pulsarForm" action="/pulsar_predict" method="post">
+                    <input type="hidden" name="MeanProfileSlider" id="MeanProfileSlider">
+                    <input type="hidden" name="StandardProfileSlider" id="StandardProfileSlider">
+                    <input type="hidden" name="ExcessProfileSlider" id="ExcessProfileSlider">
+                    <input type="hidden" name="SkewnessProfileSlider" id="SkewnessProfileSlider">
+                    <input type="hidden" name="MeanDMSlider" id="MeanDMSlider">
+                    <input type="hidden" name="StandardDMSlider" id="StandardDMSlider">
+                    <input type="hidden" name="ExcessDMSlider" id="ExcessDMSlider">
+                    <input type="hidden" name="SkewnessDMSlider" id="SkewnessDMSlider">
+                </form>
+                
+            {% endif %}
+
+        </div>
+        <script>
+            // Get the reference to the form outside the click event handler
+            const form = document.getElementById('pulsarForm');
+        
+            // 폼 제출 이벤트 처리
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // 폼 제출 기본 동작을 막습니다.
                 const formData = new FormData(form);
         
                 fetch('/pulsar_predict', {
@@ -180,14 +228,47 @@
                 })
                 .then(response => response.text())
                 .then(result => {
-                    document.getElementById('predictionResult').textContent = "Predicted Pulsar Type: " + result;
+                    // Update the prediction result in the right-box
+                    document.getElementById('predictionResult').textContent = result;
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
             });
+        
+            // 테이블 행 클릭 이벤트 처리 함수
+            const tableRows = document.querySelectorAll('tr');
+            tableRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    // 선택된 행의 <td> 태그 데이터를 추출합니다.
+                    const tdElements = row.querySelectorAll('td');
+                    const rowData = [];
+                    tdElements.forEach(td => rowData.push(td.innerText));
+        
+                    // rowData 배열의 각 요소를 parseFloat() 함수를 사용하여 숫자로 변환
+                    const rowDataNumeric = rowData.map(value => parseFloat(value));
+        
+                    // 숫자로 변환된 rowDataNumeric 배열을 사용하여 슬라이더 값 설정
+                    document.getElementById('MeanProfileSlider').value = rowDataNumeric[0];
+                    document.getElementById('StandardProfileSlider').value = rowDataNumeric[1];
+                    document.getElementById('ExcessProfileSlider').value = rowDataNumeric[2];
+                    document.getElementById('SkewnessProfileSlider').value = rowDataNumeric[3];
+                    document.getElementById('MeanDMSlider').value = rowDataNumeric[4];
+                    document.getElementById('StandardDMSlider').value = rowDataNumeric[5];
+                    document.getElementById('ExcessDMSlider').value = rowDataNumeric[6];
+                    document.getElementById('SkewnessDMSlider').value = rowDataNumeric[7];
+        
+                    // input form을 자동으로 제출합니다.
+                    setTimeout(() => {
+                        // 폼을 제출합니다.
+                        form.submit();
+                    }, 1000); // 1초 후에 폼 제출
+                });
+            });
         </script>
+
     </section>
     
 </body>
 </html>
+

@@ -1,66 +1,226 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ model_label }} 데이터 입력 페이지</title>
-    <meta charset="UTF-8">
-    <style>
-        /* 슬라이더 바 스타일 */
-        .slider-container {
-            width: 50%;
-            margin: 0 auto;
-        }
-        input[type="range"] {
-            width: 100%;
-            display: block;
-        }
-        .value-display {
-            float: right;
-        }
-    </style>
-    <script>
-        function updateValue(elementId) {
-            var valueSpan = document.getElementById(elementId + "Value");
-            var inputElement = document.getElementById(elementId);
-            valueSpan.innerHTML = inputElement.value;
-        }
-    </script>
+    <title>Abalone Age</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>{{ model_label }} 데이터 입력 페이지</h1>
-    
-    <div class="slider-container">
-        <form action="/predict" method="post" accept-charset="UTF-8">
-            <label for="length">길이 (mm): <span id="lengthValue" class="value-display">0</span></label>
-            <input type="range" id="length" name="length" min="0" max="300" step="0.1" value="0" oninput="updateValue('length')">
+    <header>
+        <h1>Team Modify</h1>
+        <p>Codestates AI 18 Team Project1 2023.07</p>
+    </header>
 
-            <label for="width">폭 (mm): <span id="widthValue" class="value-display">0</span></label>
-            <input type="range" id="width" name="width" min="0" max="300" step="0.1" value="0" oninput="updateValue('width')">
+    <section>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li style="padding-top: 12px; padding-bottom: 12px;">전복 나이 예측 모델</li>
+                <li><a href="{{ url_for('abalone_page') }}">전복 나이 예측해보기</a></li>
+                <li style="padding-top: 12px; padding-bottom: 12px;">맥동성 판별 모델</li>
+                <li><a href="{{ url_for('pulsar_page') }}">맥동성 판별해보기</a></li>
+                <li style="padding-top: 12px; padding-bottom: 12px;">강판 결함 분류 모델</li>
+                <li><a href="{{ url_for('steel_page_dl') }}">딥러닝으로 결함 분류하기</a></li>
+                <li><a href="{{ url_for('steel_page_ml') }}">머신러닝으로 결함 분류하기</a></li>
+                <li style="padding-bottom: 10px;">&nbsp;</li>
+            </ul>
+        </nav>
 
-            <label for="thickness">두께 (mm): <span id="thicknessValue" class="value-display">0</span></label>
-            <input type="range" id="thickness" name="thickness" min="0" max="50" step="0.1" value="0" oninput="updateValue('thickness')">
+        <div class='left-box'>
+            <h1>전복 데이터를 입력해보세요</h1>
+            <form id="abaloneForm" action="/abalone_predict" method="post">
 
-            <label for="total_weight">전체 무게 (g): <span id="total_weightValue" class="value-display">0</span></label>
-            <input type="range" id="total_weight" name="total_weight" min="0" max="1000" step="0.1" value="0" oninput="updateValue('total_weight')">
+                <label for="Sex">Sex:</label>
+                <select id="Sex" name="Sex" required>
+                    <option value="">Select an option</option>
+                    <option value=0>수컷</option>
+                    <option value=1>암컷</option>
+                    <option value=2>모름</option>
+                </select>
+                <br><br>
 
-            <label for="meat_weight">살 무게 (g): <span id="meat_weightValue" class="value-display">0</span></label>
-            <input type="range" id="meat_weight" name="meat_weight" min="0" max="1000" step="0.1" value="0" oninput="updateValue('meat_weight')">
+                <label for="Length">Length:</label>
+                <input type="range" id="LengthSlider" name="LengthSlider" min="4" max="1713" value="858" step="1" required>
+                <input type="number" id="LengthInput" name="LengthInput" min="4" max="1713" value="858" step="1" required>
+                <br><br>
 
-            <label for="viscera_weight">내장 무게 (g): <span id="viscera_weightValue" class="value-display">0</span></label>
-            <input type="range" id="viscera_weight" name="viscera_weight" min="0" max="1000" step="0.1" value="0" oninput="updateValue('viscera_weight')">
+                <label for="Diameter">Diameter:</label>
+                <input type="range" id="DiameterSlider" name="DiameterSlider" min="6712" max="12987661" value="6486386" step="1" required>
+                <input type="number" id="DiameterInput" name="DiameterInput" min="6712" max="12987661" value="6486386" step="1" required>
+                <br><br>
 
-            <label for="shell_weight">껍질 무게 (g): <span id="shell_weightValue" class="value-display">0</span></label>
-            <input type="range" id="shell_weight" name="shell_weight" min="0" max="1000" step="0.1" value="0" oninput="updateValue('shell_weight')">
+                <label for="Height">Height:</label>
+                <input type="range" id="HeightSlider" name="HeightSlider" min="6724" max="12987692" value="6486378" step="1" required>
+                <input type="number" id="HeightInput" name="HeightInput" min="6724" max="12987692" value="6486378" step="1" required>
+                <br><br>
 
-            <p>전복 유형 선택:</p>
-            <input type="radio" id="female" name="type" value="female">
-            <label for="female">암컷</label><br>
-            <input type="radio" id="male" name="type" value="male">
-            <label for="male">수컷</label><br>
-            <input type="radio" id="infant" name="type" value="infant">
-            <label for="infant">새끼</label><br>
+                <label for="Whole_Weight">Whole Weight:</label>
+                <input type="range" id="Whole_WeightSlider" name="Whole_WeightSlider" min="2" max="152655" value="76328" step="1" required>
+                <input type="number" id="Whole_WeightInput" name="Whole_WeightInput" min="2" max="152655" value="76328" step="1" required>
+                <br><br>
 
-            <input type="submit" value="예측하기">
-        </form>
-    </div>
+                <label for="Shucked_Weight">Shucked Weight:</label>
+                <input type="range" id="Shucked_WeightSlider" name="Shucked_WeightSlider" min="2" max="10449" value="5225" step="1" required>
+                <input type="number" id="Shucked_WeightInput" name="Shucked_WeightInput" min="2" max="10449" value="5225" step="1" required>
+                <br><br>
+
+                <label for="Viscera_Weight">Viscera Weight:</label>
+                <input type="range" id="Viscera_WeightSlider" name="Viscera_WeightSlider" min="1" max="18152" value="9076" step="1" required>
+                <input type="number" id="Viscera_WeightInput" name="Viscera_WeightInput" min="1" max="18152" value="9076" step="1" required>
+                <br><br>
+
+                <label for="Shell_Weight">Shell Weight:</label>
+                <input type="range" id="Shell_WeightSlider" name="Shell_WeightSlider" min="250" max="11591414" value="5795707" step="1" required>
+                <input type="number" id="Shell_WeightInput" name="Shell_WeightInput" min="250" max="11591414" value="5795707" step="1" required>
+                <br><br>
+                
+                
+                
+                <input type="submit" value="Predict">
+            </form>
+        </div>
+
+            <script>
+
+                const LengthSlider = document.getElementById('LengthSlider');
+                const LengthInput = document.getElementById('LengthInput');
+            
+                LengthSlider.addEventListener('input', () => {
+                    LengthInput.value = LengthSlider.value;
+                });
+            
+                LengthInput.addEventListener('input', () => {
+                    LengthSlider.value = LengthInput.value;
+                });
+            
+                const DiameterSlider = document.getElementById('DiameterSlider');
+                const DiameterInput = document.getElementById('DiameterInput');
+            
+                DiameterSlider.addEventListener('input', () => {
+                    DiameterInput.value = DiameterSlider.value;
+                });
+            
+                DiameterInput.addEventListener('input', () => {
+                    DiameterSlider.value = DiameterInput.value;
+                });
+
+                const HeightSlider = document.getElementById('HeightSlider');
+                const HeightInput = document.getElementById('HeightInput');
+            
+                HeightSlider.addEventListener('input', () => {
+                    HeightInput.value = HeightSlider.value;
+                });
+            
+                HeightInput.addEventListener('input', () => {
+                    HeightSlider.value = HeightInput.value;
+                });
+            
+                const Whole_WeightSlider = document.getElementById('Whole_WeightSlider');
+                const Whole_WeightInput = document.getElementById('Whole_WeightInput');
+            
+                Whole_WeightSlider.addEventListener('input', () => {
+                    Whole_WeightInput.value = Whole_WeightSlider.value;
+                });
+            
+                Whole_WeightInput.addEventListener('input', () => {
+                    Whole_WeightSlider.value = Whole_WeightInput.value;
+                });
+                    
+                const Shucked_WeightSlider = document.getElementById('Shucked_WeightSlider');
+                const Shucked_WeightInput = document.getElementById('Shucked_WeightInput');
+
+                Shucked_WeightSlider.addEventListener('input', () => {
+                    Shucked_WeightInput.value = Shucked_WeightSlider.value;
+                });
+
+                Shucked_WeightInput.addEventListener('input', () => {
+                    Shucked_WeightSlider.value = Shucked_WeightInput.value;
+                });
+
+                const Viscera_WeightSlider = document.getElementById('Viscera_WeightSlider');
+                const Viscera_WeightInput = document.getElementById('Viscera_WeightInput');
+
+                Viscera_WeightSlider.addEventListener('input', () => {
+                    Viscera_WeightInput.value = Viscera_WeightSlider.value;
+                });
+
+                Viscera_WeightInput.addEventListener('input', () => {
+                    Viscera_WeightSlider.value = Viscera_WeightInput.value;
+                });
+
+                const Shell_WeightSlider = document.getElementById('Shell_WeightSlider');
+                const Shell_WeightInput = document.getElementById('Shell_WeightInput');
+
+                Shell_WeightSlider.addEventListener('input', () => {
+                    Shell_WeightInput.value = Shell_WeightSlider.value;
+                });
+
+                Shell_WeightInput.addEventListener('input', () => {
+                    Shell_WeightSlider.value = Shell_WeightInput.value;
+                });
+            
+                document.getElementById('abaloneForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const form = e.target;
+                    const formData = new FormData(form);
+            
+                    fetch('/abalone_predict', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(result => {
+                        document.getElementById('predictionResult').textContent = result;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                });
+                // 폼 전송 버튼 클릭 이벤트에 submitForm 함수 연결
+                //document.getElementById('predictButton').addEventListener('click', function(e) {
+                //    e.preventDefault();
+                //    submitForm();
+                //});
+            </script>
+            <script>
+                // 각 슬라이더와 숫자 입력 요소를 연결하는 함수
+                function setupSliderInputBindings(slider, input) {
+                    slider.addEventListener('input', () => {
+                        input.value = slider.value;
+                    });
+            
+                    input.addEventListener('input', () => {
+                        slider.value = input.value;
+                    });
+                }
+                
+                // 각 슬라이더와 숫자 입력 요소를 연결하는 함수
+                function setupSliderInputBindings(slider, input) {
+                slider.addEventListener('input', () => {
+                    input.value = slider.value;
+                });
+
+                input.addEventListener('input', () => {
+                    slider.value = input.value;
+                });
+                }
+                // 각 슬라이더와 숫자 입력 요소를 가져와서 연결 설정
+                const sliders = document.querySelectorAll('input[type="range"]');
+                const inputs = document.querySelectorAll('input[type="number"]');
+            
+                sliders.forEach((slider, index) => {
+                    const input = inputs[index];
+                    setupSliderInputBindings(slider, input);
+                });
+            </script>
+
+        <div class='right-box'>
+            <h2>Prediction Result:</h2>
+            <p id="predictionResult"></p>
+        </div>
+    </section>
+        
 </body>
 </html>

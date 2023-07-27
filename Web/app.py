@@ -8,13 +8,14 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 from sklearn.preprocessing import LabelEncoder
 
-
 app = Flask(__name__)
 
 
 # ============================================ load scaler & model
 
 # abalone
+abalone_path = os.path.join(os.path.dirname(__file__), 'models/abalone_model.pkl')
+abalone_model = joblib.load(abalone_path)
 
 
 # pulsar star
@@ -54,7 +55,63 @@ model2 = joblib.load(model_path2)
 
 
 
-# ============================================ 입력값 받아와 예측 후 반환 함수
+# ============================================ 함수
+
+#abalone
+
+'''
+def map_sex_to_int(sex_data):
+    sex_mapping = {
+        'M': 1,
+        'F': 2,
+        'I': 3
+    }
+    try:
+        return sex_mapping[sex_data.upper()]
+    except KeyError:
+        return int(sex_data)
+'''
+
+# 데이터 처리
+def process_input_data_abalone(request):
+
+    # Preprocess the input data
+    sex = request.form['Sex']
+    length = request.form['LengthSlider']
+    diameter = request.form['DiameterSlider']
+    height = request.form['HeightSlider']
+    whole_weight = request.form['Whole_WeightSlider']
+    shucked_weight = request.form['Shucked_WeightSlider']
+    viscera_weight = request.form['Viscera_WeightSlider']
+    shell_weight = request.form['Shell_WeightSlider']
+
+    if sex == '0' : # 수컷
+        sex_f, sex_m, sex_i = 0, 1, 0
+    elif sex == '1' : # 암컷
+        sex_f, sex_m, sex_i = 1, 0, 0
+    else :
+        sex_f, sex_m, sex_i = 0, 0, 1
+
+    input_array_org = [[sex_f, sex_m, sex_i, length, diameter, height, whole_weight, shucked_weight, viscera_weight, shell_weight]]
+    input_array = [[float(item) for item in inner_list] for inner_list in input_array_org]
+    input_vector = np.array(input_array)
+
+    return input_vector
+
+
+
+# 예측값 반환
+def process_abalone_input():
+    weight = abalone_model['weight']
+    bias = abalone_model['bias']
+
+    input_vector = process_input_data_abalone(request)
+
+    # 예측 수행
+    output = np.matmul(input_vector, weight) + bias
+
+    return str(output[0, 0])
+
 
 ## pulsar star
 
@@ -70,10 +127,11 @@ def process_input_data_pulsar(request):
     Standard_DM = request.form['StandardDMSlider']
     Excess_DM = request.form['ExcessDMSlider']
     Skewness_DM = request.form['SkewnessDMSlider']
-
+    
     # 개별 데이터를 NumPy 배열로 표현
     individual_data = np.array([Mean_profile, Standard_profile, Excess_profile, Skewness_profile,
                                 Mean_DM, Standard_DM, Excess_DM, Skewness_DM], dtype=float)
+
     data_array = individual_data.reshape(1, -1)  # 개별 데이터를 2차원 배열로 변환
 
     data_array = pulsar_scaler.transform(data_array) # scaling
@@ -229,62 +287,52 @@ def index():
     return render_template('index.html')
 
 '''
-@app.route('/model/<model_name>', methods=['GET', 'POST'])
-def model_page(model_name):
-    global age_prediction_model, crack_classification_model, mactility_discrimination_model
-
-    if model_name == 'age_prediction':
-        model = age_prediction_model
-        model_label = 'Abalone Age Prediction Model'
-    elif model_name == 'crack_classification':
-        model = crack_classification_model
-        model_label = 'Steel Plate Crack Classification Model'
-    elif model_name == 'mactility_discrimination':
-        model = mactility_discrimination_model
-        model_label = 'MacDongSeong Discrimination Model'
-    else:
-        return "Invalid model name."
-
+# abalone
+@app.route('/abalone_page', methods=['GET', 'POST'])
+def abalone_page():
+    prediction = None
     if request.method == 'POST':
-        # 여기서 해당 모델의 데이터 입력 페이지로 이동하도록 설정
-        return redirect(url_for(f'{model_name}_page'))
+        # Get user input data
+        input_data = request.form
 
-    # 데이터 입력 페이지를 구성하는 템플릿 파일을 렌더링합니다.
-    return render_template('model_page.html', model_label=model_label, model_name=model_name, model=model)
+        # Calculate the prediction
+        prediction = predict_abalone_age(input_data)
+
+    return render_template('abalone.html', prediction=prediction)
 '''
 
 
 @app.route('/abalone_page', methods=['GET', 'POST'])
-def abalone_page():
-    global age_prediction_model
-
+def abalone_page():  
     if request.method == 'POST':
-        # 모델에 입력 데이터 전달하여 예측
-        # 예측 결과를 원하는 방식으로 가공하거나 다른 작업 수행
-        # ...
+        return process_abalone_input()
 
-        # 예측 결과를 화면에 출력하거나 다른 동작을 수행하는 코드 추가
-        # ...
+    return render_template('abalone.html')
 
-        return render_template('abalone.html', model=age_prediction_model)
-
-    return render_template('abalone.html', model=age_prediction_model)
-
-
+@app.route('/abalone_predict', methods=['POST'])
+def abalone_predict():
+    return process_abalone_input()
 
 
 
 # pulsar star
 @app.route('/pulsar_page', methods=['GET', 'POST'])
-def pulsar_page():
+def pulsar_page():  
     if request.method == 'POST':
         return process_pulsar_input()
-    return render_template('pulsar.html')
+
+    # model_page에 올릴 데이터
+    script_path = os.path.dirname(os.path.abspath(__file__))
+    csv_file_path = os.path.join(script_path, 'static', 'binary_classification_data.csv')
+    model_data = pd.read_csv(csv_file_path)
+    model_data = model_data.drop(['target_class'], axis=1)
+    model_data = model_data.head(10)
+
+    return render_template('pulsar.html', data=model_data.to_html(classes='table table-striped'))
 
 @app.route('/pulsar_predict', methods=['POST'])
 def pulsar_predict():
     return process_pulsar_input()
-
 
 
 # steel plate DL
