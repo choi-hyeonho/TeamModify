@@ -1,17 +1,18 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
-import joblib
+# Library
 import os
 import numpy as np
+import pandas as pd
+import joblib
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import tensorflow as tf
 from tensorflow.keras.models import load_model
-import pickle
-import json
+from sklearn.preprocessing import LabelEncoder
+
 
 app = Flask(__name__)
 
 
-
-# ============================================ 스케일러 & 모델 로드
+# ============================================ load scaler & model
 
 # abalone
 
@@ -20,16 +21,31 @@ app = Flask(__name__)
 pulsar_scaler_path = os.path.join(os.path.dirname(__file__), 'models/pulsar_scaler.pkl')
 pulsar_scaler = joblib.load(pulsar_scaler_path)
 
-def load_keras_model():
+def load_pulsar_model():
     tf.keras.backend.clear_session() # Clear the session and optimizer state to avoid M1/M2 Mac optimizer warning
     current_dir = os.path.dirname(os.path.abspath(__file__))
     model_path = os.path.join(current_dir, 'models/pulsar_model.h5')
     model = load_model(model_path)
     return model
-pulsar_model = load_keras_model()
+pulsar_model = load_pulsar_model()
 
 
 # steel plate
+
+# load DL label encoder & model
+def load_steel_model():
+    tf.keras.backend.clear_session() # Clear the session and optimizer state to avoid M1/M2 Mac optimizer warning
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    model_path = os.path.join(current_dir, 'models/steel_dl_model.h5')
+    model = load_model(model_path)
+    return model
+steel_dl_model = load_steel_model()
+
+label_encoder = LabelEncoder() # encoder
+label_encoder.classes_ = pd.Index(['Bumps', 'Dirtiness', 'K_Scatch', 'Other_Faults', 'Pastry', 'Stains', 'Z_Scratch'])
+
+
+# load ML label encoder & model
 model_path1 = os.path.join(os.path.dirname(__file__), 'models/steelplate_model1.pkl')
 model1 = joblib.load(model_path1)
 
@@ -80,8 +96,76 @@ def process_pulsar_input():
 
 # steel plate
 
-# 강판 불량 입력 데이터를 처리하는 함수
-def process_input_data_steel(request):
+# DL 함수
+
+# Robust Scaling을 위한 함수 정의
+def robust_scaling(column):
+    median = column.median()
+    iqr = column.quantile(0.75) - column.quantile(0.25)
+    return (column - median) / iqr
+
+# steel_dl 입력 데이터를 처리하는 함수
+def process_input_data_steel_dl(request):
+    # Update: Remove 'Type_of_Steel' from the input_columns list
+    input_columns = ['X_Minimum', 'X_Maximum', 'Y_Minimum', 'Y_Maximum', 'Pixels_Areas',
+                     'X_Perimeter', 'Y_Perimeter', 'Sum_of_Luminosity', 'Minimum_of_Luminosity',
+                     'Maximum_of_Luminosity', 'Length_of_Conveyer', 'Type_of_Steel_A300', 'Type_of_Steel_A400',
+                     'Steel_Plate_Thickness', 'Edges_Index', 'Empty_Index', 'Square_Index', #'Outside_X_Index',
+                     'Edges_X_Index', 'Edges_Y_Index', 'Outside_Global_Index', 'LogOfAreas', 'Log_X_Index',
+                     'Log_Y_Index', 'Orientation_Index', 'Luminosity_Index', 'SigmoidOfAreas']
+
+    # 입력값을 데이터에 맞게 변환
+    individual_data = []
+    for col in input_columns:
+        try:
+            # 슬라이더 값이 있는 경우 슬라이더 값 사용
+            individual_data.append(float(request.form[col + 'Slider']))
+        except KeyError:
+            # 슬라이더 값이 없는 경우 기본값 0.5 사용
+            individual_data.append(0.5)
+
+    # Type_of_Steel 처리
+    Type_of_Steel = request.form.get('Type_of_Steel')
+    if not Type_of_Steel:  # 값이 선택되지 않은 경우 기본값 0으로 처리
+        Type_of_Steel = 0
+    else:
+        Type_of_Steel = 1
+
+    individual_data.append(Type_of_Steel)  # Type_of_Steel 데이터 추가
+
+    # 개별 데이터를 NumPy 배열로 표현 (target 열 제외)
+    data_array = np.array(individual_data, dtype=float).reshape(1, -1)
+
+    return data_array
+
+# Steel_dl 페이지에서 입력 데이터를 처리하는 함수
+def process_steel_input_dl():
+    data_array = process_input_data_steel_dl(request)
+
+    '''
+    # 각 열에 대해 Robust Scaling을 적용
+    for i in range(data_array.shape[1]):
+        data_array[:, i] = robust_scaling(data_array[:, i])
+    '''
+
+    # 예측 수행
+    prediction1 = steel_dl_model.predict(data_array)
+
+    # 타겟 리스트
+    target_list = ['Pastry', 'Z_Scratch', 'K_Scatch', 'Stains', 'Dirtiness', 'Bumps', 'Other_Faults']
+
+    # 결과 반환
+    num = np.argmax(prediction1)  # NumPy 배열에서 가장 큰 값의 인덱스를 가져옴
+    predicted_class = label_encoder.classes_[num]  # 해당 인덱스에 대응하는 클래스 값을 가져옴
+
+    return predicted_class
+
+
+
+# ML 함수
+
+# steel_ml 입력 데이터 처리
+def process_input_data_steel_ml(request):
     # Update: Change the key names to match the input field names
     X_Minimum = request.form['X_MinimumSlider']
     X_Maximum = request.form['X_MaximumSlider']
@@ -115,9 +199,9 @@ def process_input_data_steel(request):
     return data_array
 
 
-# Steel 페이지에서 입력 데이터를 처리하는 함수
-def process_steel_input():
-    data_array = process_input_data_steel(request)
+# steel_ml 예측 후 반환
+def process_steel_input_ml():
+    data_array = process_input_data_steel_ml(request)
 
     # 예측 수행
     prediction1 = model1.predict(data_array)
@@ -145,15 +229,6 @@ def index():
     return render_template('index.html')
 
 '''
-# home
-@app.route('/', methods=['GET', 'POST'])
-def home():
-    if request.method == 'POST':
-        model_name = request.form['model_name']
-        return redirect(url_for('model_page', model_name=model_name))
-    return render_template('index.html')
-'''
-
 @app.route('/model/<model_name>', methods=['GET', 'POST'])
 def model_page(model_name):
     global age_prediction_model, crack_classification_model, mactility_discrimination_model
@@ -176,7 +251,7 @@ def model_page(model_name):
 
     # 데이터 입력 페이지를 구성하는 템플릿 파일을 렌더링합니다.
     return render_template('model_page.html', model_label=model_label, model_name=model_name, model=model)
-
+'''
 
 
 @app.route('/abalone_page', methods=['GET', 'POST'])
@@ -211,17 +286,31 @@ def pulsar_predict():
     return process_pulsar_input()
 
 
-# steel plate
-@app.route('/steel_page', methods=['GET', 'POST'])
-def steel_page():
+
+# steel plate DL
+@app.route('/steel_page_dl', methods=['GET', 'POST'])
+def steel_page_dl():
     if request.method == 'POST':
-        return process_steel_input()
-    return render_template('steel.html')
+        return process_steel_input_dl()
+    return render_template('steel_dl.html')
 
-@app.route('/steel_predict', methods=['POST'])
-def steel_predict():
-    return process_steel_input()
+@app.route('/steel_predict_dl', methods=['POST'])
+def steel_predict_dl():
+    # '/predict' 엔드포인트에서는 예측을 담당하는 process_steel_input() 함수를 호출하여 결과를 반환
+    return process_steel_input_dl()
 
+
+
+# steel plate ML
+@app.route('/steel_page_ml', methods=['GET', 'POST'])
+def steel_page_ml():
+    if request.method == 'POST':
+        return process_steel_input_ml()
+    return render_template('steel_ml.html')
+
+@app.route('/steel_predict_ml', methods=['POST'])
+def steel_predict_ml():
+    return process_steel_input_ml()
 
 
 if __name__ == '__main__':

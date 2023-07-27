@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Pulsar Star Model</title>
+    <title>Pulsar Star</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&display=swap" rel="stylesheet">
@@ -16,10 +16,13 @@
     <nav>
         <ul>
             <li><a href="{{ url_for('index') }}">Home</a></li>
-            <li><a href="{{ url_for('abalone_page') }}">전복 나이 예측 모델</a></li>
-            <li><a href="{{ url_for('pulsar_page') }}">맥동성 판단 모델</a></li>
-            <li><a href="{{ url_for('steel_page') }}">강판 결함 분류 ML</a></li>
-            <li><a href="{{ url_for('steel_page') }}">강판 결함 분류 DL</DL></a></li>
+            <li style="padding-top: 12px; padding-bottom: 12px;">전복 나이 예측 모델</li>
+            <li><a href="{{ url_for('abalone_page') }}">전복 나이 예측해보기</a></li>
+            <li style="padding-top: 12px; padding-bottom: 12px;">맥동성 판별 모델</li>
+            <li><a href="{{ url_for('pulsar_page') }}">맥동성 판별해보기</a></li>
+            <li style="padding-top: 12px; padding-bottom: 12px;">강판 결함 분류 모델</li>
+            <li><a href="{{ url_for('steel_page_dl') }}">딥러닝으로 결함 분류하기</a></li>
+            <li><a href="{{ url_for('steel_page_ml') }}">머신러닝으로 결함 분류하기</a></li>
             <li style="padding-bottom: 10px;">&nbsp;</li>
         </ul>
     </nav>
