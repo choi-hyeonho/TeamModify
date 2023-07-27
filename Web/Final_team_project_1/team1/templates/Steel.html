@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1>Input Form</h1>
-    <form id="steelForm" action="/predict" method="post">
+    <form id="steelForm" action="/steel_predict" method="post">
 
         <label for="X_Minimum">X_Minimum:</label>
         <input type="range" id="X_MinimumSlider" name="X_MinimumSlider" min="0" max="1705" value="852" step="1" required>
@@ -238,7 +238,7 @@
             const form = e.target;
             const formData = new FormData(form);
     
-            fetch('/predict', {
+            fetch('/steel_predict', {
                 method: 'POST',
                 body: formData
             })
