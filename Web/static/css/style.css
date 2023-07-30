@@ -1,0 +1,86 @@
+
+/* style.css */
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+header {
+    background-color: #8ec7ff;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center; 
+}
+
+nav {
+    background-color: #c1ebff;
+    color: #000000;
+    padding: 5px;
+    float: left;
+    order: 1;
+    width: 330px;
+    height: 100%;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    margin-right: 10px;
+}
+
+li a {
+    display: block;
+    background-color: #e6f7ff;
+    color: #000000;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+
+.left-box {
+    float: left;
+    order: 2;
+    width: 50%; /* 필요에 따라 너비를 조정할 수 있습니다. */
+    background-color: rgb(255, 255, 255); /* 배경색을 원하는 색으로 변경할 수 있습니다. */
+    padding: 20px; /* 상자 안의 여백을 추가할 수 있습니다. */
+}
+
+.right-box {
+    order: 3;
+    width: 50%; 
+    background-color: rgb(255, 255, 255); /* 배경색을 원하는 색으로 변경할 수 있습니다. */
+    padding: 20px; /* 상자 안의 여백을 추가할 수 있습니다. */
+}
+
+section {
+    margin-top: 0; /* 위쪽의 여백을 없앱니다. */
+    display: flex;
+    flex-direction: row;
+    height: 100vh; /* 화면의 전체 높이를 차지하도록 설정합니다. */
+}
+
+main {
+    margin-left: 600px;
+    margin-top: 50px; /* 위쪽의 여백을 없앱니다. */
+    height: 100vh; /* 화면의 전체 높이를 차지하도록 설정합니다. */
+}
+
+/* 홈 이미지 크기를 지정합니다. */
+main img {
+    max-width: 40%;
+    max-height: 40%;
+    margin-left: 150px;
+}
+
+/* Float 속성으로 인한 레이아웃 이슈를 해결하기 위해 Clearfix를 적용합니다. */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}

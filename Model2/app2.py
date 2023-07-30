@@ -7,10 +7,13 @@ import pickle
 # 터미널 상에서 input 받아서 예측값 반환 연습 코드
 
 # Function to load the Keras model
+
+# FinalModel 변경 -> 모델명 Final_model_dl.h5 -> Final_model_Final.h5
+
 def load_keras_model():
     # Clear the session and optimizer state to avoid M1/M2 Mac optimizer warning
     tf.keras.backend.clear_session()
-    model = load_model('Final_model_dl.h5')
+    model = load_model('Final_model_Final.h5')
     return model
 
 # Load your Keras model here

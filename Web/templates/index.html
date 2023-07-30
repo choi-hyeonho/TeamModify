@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Team Modify Homepage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Team Modify</h1>
+        <p>Codestates AI 18 Team Project1 2023.07</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li style="padding-top: 12px; padding-bottom: 12px;">전복 나이 예측 모델</li>
+            <li><a href="{{ url_for('abalone_page') }}">전복 나이 예측해보기</a></li>
+            <li style="padding-top: 12px; padding-bottom: 12px;">맥동성 판별 모델</li>
+            <li><a href="{{ url_for('pulsar_page') }}">맥동성 판별해보기</a></li>
+            <li style="padding-top: 12px; padding-bottom: 12px;">강판 결함 분류 모델</li>
+            <li><a href="{{ url_for('steel_page_dl') }}">딥러닝으로 결함 분류하기</a></li>
+            <li><a href="{{ url_for('steel_page_ml') }}">머신러닝으로 결함 분류하기</a></li>
+            <li style="padding-bottom: 10px;">&nbsp;</li>
+        </ul>
+    </nav>
+
+    <main>
+        <h3>
+        데이터 분석 및 모델링 서비스 제공 업체 Team Modify는 고객사로부터 새로운 의뢰를 받았다<br></h3>
+        <h2>
+        1. 오래전 만들어진 딥러닝 코드를 리팩터링해주세요!<br><br>
+        2. 기존 모델의 성능을 개선해주세요!<br><br>
+        3. 예측 모델을 웹서비스로 구현해주세요!<br><br>
+        <br>
+        </h2>
+        <img src="{{ url_for('static', filename='images/index_pic.jpg') }}">
+    </main>
+
+</body>
+</html>
+
